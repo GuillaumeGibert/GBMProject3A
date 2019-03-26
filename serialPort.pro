@@ -1,9 +1,12 @@
 QT +=  widgets serialport
 
-HEADERS       = SerialPortManager.h \
-    SignalProcessing.h
+INCLUDEPATH += include
 
-SOURCES       = SerialPortManager.cpp \
-    main.cpp \
-    SignalProcessing.cpp
+HEADERS = 	include/SerialPortManager.h \
+			include/SignalProcessing.h
+
+SOURCES = 	src/SerialPortManager.cpp \
+			src/SignalProcessing.cpp \
+			src/main.cpp 
+   
                 
