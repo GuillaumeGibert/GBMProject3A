@@ -24,13 +24,13 @@ TemporalSignalDisplay::TemporalSignalDisplay()
 	// sets default offset settings
     std::vector<std::string> aSCurvesLabel = std::vector<std::string>();
     setSignalLabels(aSCurvesLabel);
-    QSize oSize = QSize(300, 200);
+    QSize oSize = QSize(640, 480);
     setWidgetSize(oSize);
     QSize oXRange = QSize(0, 20);
     QSize oYRange = QSize(-200, 200);
     setXYRange(oXRange, oYRange);
     setLegends("Time (s)", "Signal (V)");
-	setFps(30.f);
+    setFps(30.f);
 	setTicks(5, 5);
 	setXTickLabelOffsets(10, -10);
 	setYTickLabelOffsets(10, 10);
@@ -178,6 +178,11 @@ void TemporalSignalDisplay::setDrawLine(bool bDrawLines)
 	m_bDrawLines = bDrawLines;
 }
 
+void TemporalSignalDisplay::setSignalEnabled(int i32Channel)
+{
+    m_vSignalEnabled[i32Channel] = !m_vSignalEnabled[i32Channel];
+}
+
 void TemporalSignalDisplay::setNewValues(std::vector<float> aFCurvesValues)
 {
 	if (!m_bInitialization)
@@ -224,7 +229,6 @@ void TemporalSignalDisplay::setNewValues(std::vector<float> aFCurvesValues)
 		update();
 	}
 }
-
 
 void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 {
@@ -303,8 +307,8 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
         for (uint l_curveNumber = 0; l_curveNumber < m_vSignalValues.size(); l_curveNumber++)
 		{
             if (m_vSignalEnabled[l_curveNumber]) {
-				if(m_bVerbose)
-					std::cout << "curve " <<  l_curveNumber << "is active (curve names)" << std::endl;
+                //if(m_bVerbose)
+                //	std::cout << "curve " <<  l_curveNumber << "is active (curve names)" << std::endl;
 
                 l_oPainter.setPen(m_vColors[l_curveNumber%m_vColors.size()]);
 

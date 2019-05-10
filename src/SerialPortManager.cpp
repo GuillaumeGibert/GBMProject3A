@@ -323,7 +323,7 @@ void SerialPortManager::findSerialPort(QString portName)
 			//m_bFirstPortFound = false;
 			m_bIsPortFound = true; 
 			
-            if (m_bVerboseMode)
+            //if (m_bVerboseMode)
 			{
 				qInfo() << "[INFO] <SerialPortManager> QSerialPort found : ";
 				qInfo() << "--> Port: " + info.portName();
