@@ -243,9 +243,9 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 		l_oPainter.setPen(Qt::white);
 
 		// x-ticks
-		for (uint l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
+        for (uint l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
 		{
-			if (l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic > 0 && l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic < m_oSize.width())
+            if (l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic > 0 && l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic < m_oSize.width()*m_fFps)
 				l_oPainter.drawLine(	QPoint((l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, 0),
 										QPoint((l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, m_oSize.height()));
 		}
@@ -268,7 +268,7 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 		// x-axis
 		for (uint l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
 		{
-			if (l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic > 0 && l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic < m_oSize.width())
+            if (l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic > 0 && l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic < m_oSize.width()*m_fFps)
 			{
                 std::ostringstream l_osXLegend;
 				l_osXLegend << (l_xTick + m_i32ScrollingOffsetXLegend) * m_i32XTic;
