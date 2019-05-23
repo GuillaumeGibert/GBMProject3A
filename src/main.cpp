@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     SineGenerator signalGenerator;
 
     // sets generator features
-    signalGenerator.setNbSignals(5);
+   /*signalGenerator.setNbSignals(5);
     signalGenerator.setFps(10.0);
     std::vector<float> vAmplitudes{ 10.0f, 20.0f, 30.0f, 40.0f, 50.0f };
     signalGenerator.setAmplitudes(vAmplitudes);
@@ -47,6 +47,17 @@ int main(int argc, char *argv[])
     signalGenerator.setFrequencies(vFrequencies);
     //std::vector<float> vPhases{ 0.0f, (float)M_PI / 4.0f, (float)M_PI / 2.0f, 3.0f * (float)M_PI / 4.0f, 0.0f };
     std::vector<float> vPhases{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+    signalGenerator.setPhases(vPhases);
+*/
+
+    signalGenerator.setNbSignals(1);
+    signalGenerator.setFps(100.0);
+    std::vector<float> vAmplitudes{ 50.0f};
+    signalGenerator.setAmplitudes(vAmplitudes);
+    std::vector<float> vFrequencies{ 10.0f };
+    signalGenerator.setFrequencies(vFrequencies);
+    //std::vector<float> vPhases{ 0.0f, (float)M_PI / 4.0f, (float)M_PI / 2.0f, 3.0f * (float)M_PI / 4.0f, 0.0f };
+    std::vector<float> vPhases{ 0.0f };
     signalGenerator.setPhases(vPhases);
 
     //=======SERIALPORT OR SINE GENERATOR=========
@@ -76,9 +87,10 @@ int main(int argc, char *argv[])
     TemporalSignalDisplay disp;
         disp.setWidgetSize(QSize(640, 480));
         std::vector<std::string> vSignalLabels;
-        vSignalLabels.push_back("1");vSignalLabels.push_back("2");vSignalLabels.push_back("3");vSignalLabels.push_back("4");vSignalLabels.push_back("5");
+        //vSignalLabels.push_back("1");vSignalLabels.push_back("2");vSignalLabels.push_back("3");vSignalLabels.push_back("4");vSignalLabels.push_back("5");
+        vSignalLabels.push_back("1");
         disp.setSignalLabels(vSignalLabels);
-        disp.setFps(10.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
+        disp.setFps(100.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
         disp.setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
         disp.setXYRange(QSize(0, 20), QSize(-60, 60)); // for the sine generator
         disp.setLegends("Time (s)", "Signal (V)");
@@ -89,7 +101,7 @@ int main(int argc, char *argv[])
      TemporalSignalDisplay dispFilt;
         dispFilt.setWidgetSize(QSize(640, 480));
         dispFilt.setSignalLabels(vSignalLabels);
-        dispFilt.setFps(10.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
+        dispFilt.setFps(100.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
         dispFilt.setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
         dispFilt.setXYRange(QSize(0, 20), QSize(-60, 60)); // for the sine generator
         dispFilt.setLegends("Time (s)", "Signal (V)");

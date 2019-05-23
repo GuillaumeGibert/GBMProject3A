@@ -26,6 +26,7 @@ signals:
 private:
     TemporalFilter* m_pFilter;
     std::vector<std::deque<float>> m_vBufferedSignals;
+    std::vector<std::deque<float>> m_vBufferedFilteredSignals;
 };
 
 #endif // SIGNALPROCESSING_H
