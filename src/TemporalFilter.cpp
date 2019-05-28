@@ -1,4 +1,5 @@
 #include "TemporalFilter.h"
+#include <QDebug>
 
 TemporalFilter::TemporalFilter(bool bVerboseMode):
 	m_bVerboseMode(bVerboseMode)
@@ -24,21 +25,27 @@ void TemporalFilter::filt(std::deque<float>& inSignal, std::deque<float>& outSig
 		return;
 	}
 
-    for (auto l_sample = 0; l_sample < inSignal.size(); l_sample++)
-    {
-        double l_dWeightedInputSum = 0.0;
-        double l_dWeightedOuputSum = 0.0;
-        for (auto l_coef = 0; l_coef < bFilterCoefficients.size(); l_coef++)
-        {
-            if (l_sample - l_coef >= 0)
-            {
-                l_dWeightedInputSum += bFilterCoefficients[l_coef] * inSignal[l_sample - l_coef];
-                l_dWeightedOuputSum += aFilterCoefficients[l_coef] * outSignal[l_sample - l_coef];
-            }
-        }
+    int l_sample = inSignal.size()-1;
 
-        outSignal[l_sample] = l_dWeightedInputSum - l_dWeightedOuputSum;
+    double l_dWeightedInputSum = 0.0;
+    for (auto l_coef = 0; l_coef < m_bFilterCoefficients.size(); l_coef++)
+    {
+        if (l_sample - l_coef >= 0)
+        {
+            l_dWeightedInputSum += m_bFilterCoefficients[l_coef] * inSignal[l_sample - l_coef];
+        }
     }
+
+     double l_dWeightedOuputSum = 0.0;
+    for (auto l_coef = 1; l_coef < m_aFilterCoefficients.size(); l_coef++)
+    {
+        if (l_sample - l_coef >= 0)
+        {
+            l_dWeightedOuputSum += m_aFilterCoefficients[l_coef] * outSignal[l_sample - l_coef];
+        }
+    }
+    outSignal[l_sample] = l_dWeightedInputSum - l_dWeightedOuputSum;
+
 }
 
 void TemporalFilter::filt(std::deque<float>& inSignal, std::deque<float>& outSignal)
@@ -49,37 +56,43 @@ void TemporalFilter::filt(std::deque<float>& inSignal, std::deque<float>& outSig
 		return;
 	}
 
-    for (auto l_sample = 0; l_sample < inSignal.size(); l_sample++)
+    for (int i=0; i < inSignal.size(); i++)
+        qDebug() << "inSignal[" << i << "]= " <<inSignal[i];
+
+    for (int i=0; i < outSignal.size(); i++)
+        qDebug() << "outSignal[" << i << "]= " <<outSignal[i];
+
+    int l_sample = inSignal.size()-1;
+    //qDebug() << "l_sample = " << l_sample;
+    double l_dWeightedInputSum = 0.0;
+    for (auto l_coef = 0; l_coef < m_bFilterCoefficients.size(); l_coef++)
     {
-        double l_dWeightedInputSum = 0.0;
-        double l_dWeightedOuputSum = 0.0;
-        /*for (auto l_coef = 0; l_coef < m_bFilterCoefficients.size(); l_coef++)
+        //qDebug() << "l_coef = " << l_coef;
+        // qDebug() << "inSignal.size() = " << inSignal.size();
+        //  qDebug() << "outSignal.size() = " << outSignal.size();
+        if (l_sample - l_coef >= 0)
         {
-            if (l_sample - l_coef >= 0)
-            {
-                l_dWeightedInputSum += m_bFilterCoefficients[l_coef] * inSignal[l_sample - l_coef];
-                l_dWeightedOuputSum += m_aFilterCoefficients[l_coef] * outSignal[l_sample - l_coef];
-            }
-        }*/
-
-        for (auto l_coef = 0; l_coef < m_bFilterCoefficients.size(); l_coef++)
-        {
-            if (l_sample - l_coef >= 0)
-            {
-                l_dWeightedInputSum += m_bFilterCoefficients[l_coef] * inSignal[l_sample - l_coef];
-            }
+            l_dWeightedInputSum += m_bFilterCoefficients[l_coef] * inSignal[l_sample - l_coef];
         }
-
-        for (auto l_coef = 1; l_coef < m_aFilterCoefficients.size(); l_coef++)
-        {
-            if (l_sample - l_coef >= 0)
-            {
-                l_dWeightedOuputSum += m_aFilterCoefficients[l_coef] * outSignal[l_sample - l_coef];
-            }
-        }
-        if (l_sample == inSignal.size()-1)
-         outSignal[l_sample] = l_dWeightedInputSum - l_dWeightedOuputSum;
     }
+    qDebug() << "l_dWeightedInputSum = " << l_dWeightedInputSum;
+
+    double l_dWeightedOuputSum = 0.0;
+    for (auto l_coef = 1; l_coef < m_aFilterCoefficients.size(); l_coef++)
+    {
+        // qDebug() << "l_coef = " << l_coef;
+        if (l_sample - l_coef >= 0)
+        {
+            l_dWeightedOuputSum += m_aFilterCoefficients[l_coef] * outSignal[l_sample - l_coef];
+        }
+    }
+    qDebug() << "l_dWeightedOuputSum = " << l_dWeightedOuputSum;
+    qDebug() << "l_dWeightedInputSum- l_dWeightedOuputSum = " << l_dWeightedInputSum - l_dWeightedOuputSum;
+
+    qDebug() << "outSignal[" << l_sample<< "] = " << outSignal[l_sample];
+    outSignal[l_sample] = l_dWeightedInputSum - l_dWeightedOuputSum;
+    qDebug() << "outSignal[" << l_sample<< "] = " << outSignal[l_sample];
+
 }
 
 
