@@ -5,20 +5,28 @@ SignalProcessing::SignalProcessing()
     m_pFilter = new TemporalFilter();
 
     // butterworth low-pass, 6th order, Sampling rate = 100 Hz, Cutoff Frequency = 0.5 Hz
-    std::vector<float> l_aFilterCoefs = {  1.00000f,   -5.87862f,   14.40044f,  -18.81529f,   13.82942f,   -5.42165f,    0.88569f};
-    std::vector<float> l_bFilterCoefs = { 0.000000000014144f,   0.000000000084864f,   0.000000000212161f,   0.000000000282881f,   0.000000000212161f,   0.000000000084864f,   0.000000000014144f};
+    //std::vector<float> l_aFilterCoefs = {  1.00000f,   -5.87862f,   14.40044f,  -18.81529f,   13.82942f,   -5.42165f,    0.88569f};
+    //std::vector<float> l_bFilterCoefs = { 0.000000000014144f,   0.000000000084864f,   0.000000000212161f,   0.000000000282881f,   0.000000000212161f,   0.000000000084864f,   0.000000000014144f};
 
     // butterworth low-pass, 6th order, Sampling rate = 100 Hz, Cutoff Frequency = 5 Hz
-    l_aFilterCoefs = {  1.00000f,   -4.78714f,    9.64952f,  -10.46908f,    6.44111f,   -2.12904f,    0.29517f};
-    l_bFilterCoefs = { 0.0000085766f,   0.0000514593f,   0.0001286484f,   0.0001715311f,   0.0001286484f,   0.0000514593f,   0.0000085766f};
+   // std::vector<float> l_aFilterCoefs = {  1.00000f,   -4.78714f,    9.64952f,  -10.46908f,    6.44111f,   -2.12904f,    0.29517f};
+    //std::vector<float> l_bFilterCoefs = { 0.0000085766f,   0.0000514593f,   0.0001286484f,   0.0001715311f,   0.0001286484f,   0.0000514593f,   0.0000085766f};
 
+
+    // butterworth low-pass, 6th order, Sampling rate = 100 Hz, Cutoff Frequency = 1 Hz
+    //std::vector<float> l_aFilterCoefs = {   1.0000000000000000000000000000000000000000f,	-3.8358255406473480420004307234194129705429f,	5.5208191366222276741382302134297788143158f,	-3.5335352194630145206133420288097113370895f,	0.8485559992664769568548877032299060374498f};
+    //std::vector<float> l_bFilterCoefs = { 0.0000008984861463970645773386694207807146f,	0.0000035939445855882583093546776831228584f,	0.0000053909168783823870405155428975341181f,	0.0000035939445855882583093546776831228584f,	0.0000008984861463970645773386694207807146f};
+
+    // butterworth low-pass, 6th order, Sampling rate = 100 Hz, Cutoff Frequency = 3 Hz
+    std::vector<float> l_aFilterCoefs = { 1.00000f,   -5.27192f,   11.61993f,  -13.70270f,    9.11607f,   -3.24342f,    0.48207f};
+    std::vector<float> l_bFilterCoefs = { 0.00000049535f,   0.00000297211f,   0.00000743028f,   0.00000990704f,   0.00000743028f,   0.00000297211f,   0.00000049535f};
 
 
     m_pFilter->setAFilterCoefficients(l_aFilterCoefs);
     m_pFilter->setBFilterCoefficients(l_bFilterCoefs);
 
-    m_vBufferedSignals.resize(5);
-    m_vBufferedFilteredSignals.resize(5);
+    m_vBufferedSignals.resize(1);
+    m_vBufferedFilteredSignals.resize(1);
 }
 
 
