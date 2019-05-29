@@ -1,16 +1,11 @@
 #include <QApplication>
-#include <QObject>
-#include <QHBoxLayout>
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QSignalMapper>
 
 #include "SerialPortManager.h"
 #include "SignalProcessing.h"
-#include "TemporalSignalDisplay.h"
 #include "SineGenerator.h"
-#include "TemporalFilter.h"
 #include "MainWindow.h"
+
+#define ARDUINO false
 
 int main(int argc, char *argv[])
 {
@@ -39,30 +34,18 @@ int main(int argc, char *argv[])
     SineGenerator signalGenerator;
 
     // sets generator features
-   /*signalGenerator.setNbSignals(5);
+    signalGenerator.setNbSignals(5);
     signalGenerator.setFps(10.0);
-    std::vector<float> vAmplitudes{ 10.0f, 20.0f, 30.0f, 40.0f, 50.0f };
+    std::vector<float> vAmplitudes{ 50.0f, 50.0f, 50.0f, 50.0f, 50.0f };
     signalGenerator.setAmplitudes(vAmplitudes);
-    std::vector<float> vFrequencies{ 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
+    std::vector<float> vFrequencies{ 0.1f, 0.2f, 5.0f, 10.0f, 20.0f };
     signalGenerator.setFrequencies(vFrequencies);
-    //std::vector<float> vPhases{ 0.0f, (float)M_PI / 4.0f, (float)M_PI / 2.0f, 3.0f * (float)M_PI / 4.0f, 0.0f };
-    std::vector<float> vPhases{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-    signalGenerator.setPhases(vPhases);
-*/
-
-    signalGenerator.setNbSignals(1);
-    signalGenerator.setFps(100.0);
-    std::vector<float> vAmplitudes{ 50.0f};
-    signalGenerator.setAmplitudes(vAmplitudes);
-    std::vector<float> vFrequencies{ 10.0f };
-    signalGenerator.setFrequencies(vFrequencies);
-    //std::vector<float> vPhases{ 0.0f, (float)M_PI / 4.0f, (float)M_PI / 2.0f, 3.0f * (float)M_PI / 4.0f, 0.0f };
-    std::vector<float> vPhases{ 0.0f };
+    std::vector<float> vPhases{ 0.0f, (float)M_PI / 4.0f, (float)M_PI / 2.0f, 3.0f * (float)M_PI / 4.0f, 0.0f };
     signalGenerator.setPhases(vPhases);
 
     //=======SERIALPORT OR SINE GENERATOR=========
     // either open the serial port or the signal generator
-    if (false)
+    if (ARDUINO)
     {
         // opens the serial port
         spm.openSerialPort();
@@ -71,93 +54,36 @@ int main(int argc, char *argv[])
     }
     else
     {
+        // start the worker
         signalGenerator.startWork();
+
+        // at this point, the signalGenerator object is sending data through its sigBroadcastSerialPortValues signal
     }
 
     //=======SIGNAL PROCESSING=========
     // creates a signal processing object
     SignalProcessing sp;
+    sp.setNbSignals(5);
 
-    // connects the signal from serial port manager (or sine generator) to a slot of the signal processing object
-    QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(std::vector<float>)), &sp, SLOT(setInputData(std::vector<float>)));
-    QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &sp, SLOT(setInputData(std::vector<float>)));
-
-    //=======SIGNAL DISPLAY=========
-    // creates a signal display object
-    TemporalSignalDisplay disp;
-        disp.setWidgetSize(QSize(640, 480));
-        std::vector<std::string> vSignalLabels;
-        //vSignalLabels.push_back("1");vSignalLabels.push_back("2");vSignalLabels.push_back("3");vSignalLabels.push_back("4");vSignalLabels.push_back("5");
-        vSignalLabels.push_back("1");
-        disp.setSignalLabels(vSignalLabels);
-        disp.setFps(100.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
-        disp.setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
-        disp.setXYRange(QSize(0, 20), QSize(-60, 60)); // for the sine generator
-        disp.setLegends("Time (s)", "Signal (V)");
-        disp.setTicks(5, 5);
-        disp.setDrawLine(true);
-
-     // creates a signal display object for filtered signals
-     TemporalSignalDisplay dispFilt;
-        dispFilt.setWidgetSize(QSize(640, 480));
-        dispFilt.setSignalLabels(vSignalLabels);
-        dispFilt.setFps(100.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
-        dispFilt.setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
-        dispFilt.setXYRange(QSize(0, 20), QSize(-60, 60)); // for the sine generator
-        dispFilt.setLegends("Time (s)", "Signal (V)");
-        dispFilt.setTicks(5, 5);
-        dispFilt.setDrawLine(true);
-
-    // connects the signal from serial port manager (or sine generator) to a slot of the temporal signal display object
-    QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(std::vector<float>)), &disp, SLOT(setNewValues(std::vector<float>)));
-    QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &disp, SLOT(setNewValues(std::vector<float>)));
-
-    QObject::connect(&sp, SIGNAL(sigBroadcastFilteredValues(std::vector<float>)), &dispFilt, SLOT(setNewValues(std::vector<float>)));
-
-    // creates an array of checkboxes to enabe/disable the display of specific signals
-    QGroupBox *groupBoxSignal = new QGroupBox("Signal");
-    QVBoxLayout *vboxSignal = new QVBoxLayout;
-    std::vector<QCheckBox*> vSignalCheckBoxes;
-
-    for (int l_cb = 0; l_cb < vSignalLabels.size(); l_cb++)
-    {
-        QCheckBox* l_ocb = new QCheckBox(QString::fromStdString(vSignalLabels[l_cb]));
-        l_ocb->setChecked(true);
-        l_ocb->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-        vboxSignal->addWidget(l_ocb);
-        vSignalCheckBoxes.push_back(l_ocb);
-    }
-    vboxSignal->addStretch(1);
-    groupBoxSignal->setFixedWidth(100);
-    groupBoxSignal->setLayout(vboxSignal);
-
-    // connects check box signals to enable/disable display via a signal mapper
-    QSignalMapper* sigMapper = new QSignalMapper;
-    for (int l_cb = 0; l_cb < vSignalLabels.size(); l_cb++)
-    {
-        QObject::connect(vSignalCheckBoxes[l_cb], SIGNAL(stateChanged(int)), sigMapper, SLOT(map()));
-        sigMapper->setMapping(vSignalCheckBoxes[l_cb], l_cb);
-    }
-    QObject::connect(sigMapper, SIGNAL(mapped(int)), &disp, SLOT(setSignalEnabled(int)));
-
-     //=======MAIN WINDOW=========
-    // creates the Main Window and a horizontal layout
-    MainWindow* window = new MainWindow;
-    QHBoxLayout* mainLayout = new QHBoxLayout;
-
-    // resizes the main window
-    window->resize(1800, 500);
-
-    // attachs the signal display to the layout
-    mainLayout->addWidget(&disp);
-    mainLayout->addWidget(groupBoxSignal);
-    mainLayout->addWidget(&dispFilt);
-
-    // attachs the layout to the main window
-    window->setLayout(mainLayout);
-
+    //=======MAIN WINDOW=========
+    // creates the Main Window
+    MainWindow window;
     // shows the main window
-    window->show();
+    window.show();
+
+    //=======Qt CONNECTIONS=========
+    if (ARDUINO)
+    {
+        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &window, SLOT(setSignalValues(std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(std::vector<float>)), &sp, SLOT(setInputData(std::vector<float>)));
+    }
+    else
+    {
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &window, SLOT(setSignalValues(std::vector<float>)));
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &sp, SLOT(setInputData(std::vector<float>)));
+    }
+
+    QObject::connect(&sp, SIGNAL(sigBroadcastFilteredValues(std::vector<float>)), &window, SLOT(setFilteredSignalValues(std::vector<float>)));
 
     return app.exec();
 }

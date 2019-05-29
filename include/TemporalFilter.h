@@ -16,7 +16,6 @@ class TemporalFilter : public QObject
 		~TemporalFilter();
 	
 	public:
-        void filt(std::deque<float>& inSignal, std::deque<float>& outSignal, std::vector<float>& aFilterCoefficients, std::vector<float>& bFilterCoefficients);
         void filt(std::deque<float>& inSignal, std::deque<float>& outSignal);
 	
         void setAFilterCoefficients(std::vector<float> aFilterCoefficients);
