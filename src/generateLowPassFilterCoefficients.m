@@ -27,17 +27,17 @@ pkg load signal;
 % saves the coeffcients
 fid = fopen(outFilename, 'w');
 if (fid)
-	fprintf(fid, 'aCoefficients: [');
+	fprintf(fid, 'l_aFilterCoefs = {');
 	for (l_coef = 1:length(a))
-		fprintf(fid, '%2.40f\t', a(l_coef));
+		fprintf(fid, '%2.40ff,\t', a(l_coef));
 	end
 	fprintf(fid, ']\n');
 	
-	fprintf(fid, 'bCoefficients: [');
+	fprintf(fid, 'l_bFilterCoefs = {');
 	for (l_coef = 1:length(b))
-		fprintf(fid, '%2.40f\t', b(l_coef));
+		fprintf(fid, '%2.40ff,\t', b(l_coef));
 	end
-	fprintf(fid, ']\n');
+	fprintf(fid, '};\n');
 	
 	fclose(fid);
 end

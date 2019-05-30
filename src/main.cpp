@@ -35,10 +35,10 @@ int main(int argc, char *argv[])
 
     // sets generator features
     signalGenerator.setNbSignals(5);
-    signalGenerator.setFps(10.0);
+    signalGenerator.setFps(100.0);
     std::vector<float> vAmplitudes{ 50.0f, 50.0f, 50.0f, 50.0f, 50.0f };
     signalGenerator.setAmplitudes(vAmplitudes);
-    std::vector<float> vFrequencies{ 0.1f, 0.2f, 5.0f, 10.0f, 20.0f };
+    std::vector<float> vFrequencies{ 1.0f, 2.0f, 3.0f, 5.0f, 10.0f };
     signalGenerator.setFrequencies(vFrequencies);
     std::vector<float> vPhases{ 0.0f, (float)M_PI / 4.0f, (float)M_PI / 2.0f, 3.0f * (float)M_PI / 4.0f, 0.0f };
     signalGenerator.setPhases(vPhases);
