@@ -2,6 +2,12 @@
 #define MAIN_WINDOW_H
 
 #include <QWidget>
+#include <QHBoxLayout>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QSignalMapper>
+
+#include "TemporalSignalDisplay.h"
 
 class MainWindow: public QWidget
 {
@@ -11,8 +17,14 @@ class MainWindow: public QWidget
         MainWindow();
         virtual ~MainWindow();
 
-    private:
+    public slots:
+        void setSignalValues(std::vector<float> vSignalValues);
+        void setFilteredSignalValues(std::vector<float> vFilteredSignalValues);
 
+    private:
+        TemporalSignalDisplay* m_pSignalDisplay;
+        TemporalSignalDisplay* m_pFilteredSignalDisplay;
+        QHBoxLayout* m_pMainLayout;
 
 };
 
