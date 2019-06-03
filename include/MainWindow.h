@@ -8,6 +8,7 @@
 #include <QSignalMapper>
 
 #include "TemporalSignalDisplay.h"
+#include "BufferedSignalDisplay.h"
 
 class MainWindow: public QWidget
 {
@@ -20,10 +21,12 @@ class MainWindow: public QWidget
     public slots:
         void setSignalValues(std::vector<float> vSignalValues);
         void setFilteredSignalValues(std::vector<float> vFilteredSignalValues);
+        void setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues);
 
     private:
         TemporalSignalDisplay* m_pSignalDisplay;
         TemporalSignalDisplay* m_pFilteredSignalDisplay;
+        BufferedSignalDisplay* m_pBufferedSignalDisplay;
         QHBoxLayout* m_pMainLayout;
 
 };

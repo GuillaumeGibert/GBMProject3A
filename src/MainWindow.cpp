@@ -26,6 +26,18 @@ MainWindow::MainWindow()
         m_pFilteredSignalDisplay->setTicks(1, 5);
         m_pFilteredSignalDisplay->setDrawLine(true);
 
+
+    // creates a display for filtered signals
+    m_pBufferedSignalDisplay = new BufferedSignalDisplay();
+        m_pBufferedSignalDisplay->setWidgetSize(QSize(640, 480));
+        m_pBufferedSignalDisplay->setSignalLabels(vSignalLabels);
+        m_pBufferedSignalDisplay->setFps(100.f); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
+        m_pBufferedSignalDisplay->setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
+        m_pBufferedSignalDisplay->setXYRange(QSize(0, 2), QSize(-60, 60)); // for the sine generator
+        m_pBufferedSignalDisplay->setLegends("Time (s)", "Signal (V)");
+        m_pBufferedSignalDisplay->setTicks(1, 5);
+        m_pBufferedSignalDisplay->setDrawLine(true);
+
     // creates an array of checkboxes to enabe/disable the display of specific signals
     QGroupBox *groupBoxSignal = new QGroupBox("Signal");
     QVBoxLayout *vboxSignal = new QVBoxLayout;
@@ -59,7 +71,8 @@ MainWindow::MainWindow()
     // designs the interface
     m_pMainLayout = new QHBoxLayout;
     m_pMainLayout->addWidget(m_pSignalDisplay);
-    m_pMainLayout->addWidget(m_pFilteredSignalDisplay);
+    //m_pMainLayout->addWidget(m_pFilteredSignalDisplay);
+    m_pMainLayout->addWidget(m_pBufferedSignalDisplay);
     m_pMainLayout->addWidget(groupBoxSignal);
 
     // attachs the layout to the main window
@@ -75,6 +88,9 @@ MainWindow::~MainWindow()
     if (nullptr != m_pFilteredSignalDisplay)
         delete m_pFilteredSignalDisplay;
 
+    if (nullptr != m_pBufferedSignalDisplay)
+        delete m_pBufferedSignalDisplay;
+
     if (nullptr != m_pMainLayout)
         delete m_pMainLayout;
 }
@@ -87,6 +103,11 @@ void MainWindow::setSignalValues(std::vector<float> vSignalValues)
 void MainWindow::setFilteredSignalValues(std::vector<float> vFilteredSignalValues)
 {
     m_pFilteredSignalDisplay->setNewValues(vFilteredSignalValues);
+}
+
+void MainWindow::setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues)
+{
+    m_pBufferedSignalDisplay->setNewValues(vBufferedSignalValues);
 }
 
 

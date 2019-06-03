@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
     }
 
     QObject::connect(&sp, SIGNAL(sigBroadcastFilteredValues(std::vector<float>)), &window, SLOT(setFilteredSignalValues(std::vector<float>)));
+    QObject::connect(&sp, SIGNAL(sigBroadcastBufferedValues(std::vector<std::deque<float>>)), &window, SLOT(setBufferedSignalValues(std::vector<std::deque<float>>)));
 
     return app.exec();
 }

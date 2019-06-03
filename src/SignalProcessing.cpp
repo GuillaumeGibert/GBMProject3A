@@ -30,11 +30,14 @@ void SignalProcessing::setNbSignals(int nbSignal)
     m_i32NbSignals = nbSignal;
     m_vBufferedSignals.resize(m_i32NbSignals);
     m_vBufferedFilteredSignals.resize(m_i32NbSignals);
+    m_vSignalBuffer.resize(m_i32NbSignals);
 }
 
 void SignalProcessing::setInputData(std::vector<float> vInputData)
 {
     std::vector<float> vOutputSignal;
+
+    m_vTimeBuffer.push_back(0.0);
 
     for (int l_signal=0; l_signal < vInputData.size(); l_signal++)
     {
@@ -48,6 +51,13 @@ void SignalProcessing::setInputData(std::vector<float> vInputData)
 
         m_pFilter->filt(m_vBufferedSignals[l_signal], m_vBufferedFilteredSignals[l_signal]);
         vOutputSignal.push_back(m_vBufferedFilteredSignals[l_signal][m_vBufferedFilteredSignals[l_signal].size()-1]);
+
+
+
+
+        m_vSignalBuffer[l_signal].push_back(vInputData[l_signal]);
+        if ( m_vSignalBuffer[l_signal].size()>2*100)
+            m_vSignalBuffer[l_signal].pop_front();
     }
 
     emit sigBroadcastFilteredValues(vOutputSignal);

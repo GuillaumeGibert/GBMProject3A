@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <iostream>
 #include <sstream>
+#include <deque>
 
 class SignalDisplay : public QWidget
 {
@@ -31,19 +32,8 @@ class SignalDisplay : public QWidget
     public slots:
         void setSignalEnabled(int);
 
-		/**
-		* \brief Sets a new input set of values to draw, the array must have the same size than the signal label curve array.
-		* \param [in] aFCurvesValues : array of input values, corresponding to the title curve array
-		*/
-        //void setNewValues(std::vector<float> vSignalValues);
-		
     protected:
-		/**
-		* \brief paint event
-		*/		    
-		void paintEvent(QPaintEvent *);
-	
-		void checkSettings();
+        void checkSettings();
 	
 	
     protected:

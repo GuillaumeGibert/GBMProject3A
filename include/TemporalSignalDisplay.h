@@ -1,11 +1,6 @@
 #ifndef TEMPORAL_SIGNAL_DISPLAY_
 #define TEMPORAL_SIGNAL_DISPLAY_
 
-#include <QWidget>
-#include <QPainter>
-#include <iostream>
-#include <sstream>
-
 #include "SignalDisplay.h"
 
 class TemporalSignalDisplay : public SignalDisplay
