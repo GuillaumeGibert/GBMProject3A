@@ -19,7 +19,7 @@ class MainWindow: public QWidget
         virtual ~MainWindow();
 
     public slots:
-        void setSignalValues(std::vector<float> vSignalValues);
+        void setSignalValues(float, std::vector<float> vSignalValues);
         void setFilteredSignalValues(std::vector<float> vFilteredSignalValues);
         void setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues);
 

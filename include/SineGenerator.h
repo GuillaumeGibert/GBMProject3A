@@ -33,7 +33,7 @@ public slots:
 
 
 signals:
-    void sigBroadcastSignalValues(std::vector<float>);
+    void sigBroadcastSignalValues(float, std::vector<float>);
 
 private:
 	int m_i32NbSignals;

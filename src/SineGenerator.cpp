@@ -66,7 +66,7 @@ void SineGenerator::doWork()
     for (int l_signal = 0; l_signal < m_i32NbSignals; l_signal++)
         vSignalValues.push_back(m_vAmplitudes[l_signal] * sin (2.0f * M_PI * m_vFrequencies[l_signal] * (float)m_pElapsedTimer->elapsed() / 1000.0 + m_vPhases[l_signal]));
 
-	emit sigBroadcastSignalValues(vSignalValues);
+    emit sigBroadcastSignalValues((float)m_pElapsedTimer->elapsed() / 1000.0, vSignalValues);
 }
 
 void SineGenerator::startWork()

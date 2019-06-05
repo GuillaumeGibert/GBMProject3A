@@ -74,13 +74,13 @@ int main(int argc, char *argv[])
     //=======Qt CONNECTIONS=========
     if (ARDUINO)
     {
-        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &window, SLOT(setSignalValues(std::vector<float>)));
-        QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(std::vector<float>)), &sp, SLOT(setInputData(std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &window, SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(float, std::vector<float>)), &sp, SLOT(setInputData(float, std::vector<float>)));
     }
     else
     {
-        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &window, SLOT(setSignalValues(std::vector<float>)));
-        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(std::vector<float>)), &sp, SLOT(setInputData(std::vector<float>)));
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &window, SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &sp, SLOT(setInputData(float, std::vector<float>)));
     }
 
     QObject::connect(&sp, SIGNAL(sigBroadcastFilteredValues(std::vector<float>)), &window, SLOT(setFilteredSignalValues(std::vector<float>)));

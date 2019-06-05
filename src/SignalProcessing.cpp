@@ -30,14 +30,27 @@ void SignalProcessing::setNbSignals(int nbSignal)
     m_i32NbSignals = nbSignal;
     m_vBufferedSignals.resize(m_i32NbSignals);
     m_vBufferedFilteredSignals.resize(m_i32NbSignals);
-    m_vSignalBuffer.resize(m_i32NbSignals);
+    m_vSignalBuffer.resize(m_i32NbSignals+1);
 }
 
-void SignalProcessing::setInputData(std::vector<float> vInputData)
+void SignalProcessing::setFps(float fFps)
+{
+    m_fFps = fFps;
+}
+
+void SignalProcessing::buffer(float fDuration, float fShift)
+{
+
+}
+
+void SignalProcessing::setInputData(float timestamp, std::vector<float> vInputData)
 {
     std::vector<float> vOutputSignal;
 
-    m_vTimeBuffer.push_back(0.0);
+    if (m_vSignalBuffer[0].size() < 2*100)
+        m_vSignalBuffer[0].push_back(timestamp);
+    //if ( m_vSignalBuffer[0].size()>2*100)
+    //    m_vSignalBuffer[0].pop_front();
 
     for (int l_signal=0; l_signal < vInputData.size(); l_signal++)
     {
@@ -54,12 +67,15 @@ void SignalProcessing::setInputData(std::vector<float> vInputData)
 
 
 
-
-        m_vSignalBuffer[l_signal].push_back(vInputData[l_signal]);
-        if ( m_vSignalBuffer[l_signal].size()>2*100)
-            m_vSignalBuffer[l_signal].pop_front();
+        if (m_vSignalBuffer[0].size() < 2*100)
+        m_vSignalBuffer[l_signal+1].push_back(vInputData[l_signal]);
+       // if ( m_vSignalBuffer[l_signal+1].size()>2*100)
+        //    m_vSignalBuffer[l_signal+1].pop_front();
     }
 
     emit sigBroadcastFilteredValues(vOutputSignal);
 
+    qDebug() << "m_vSignalBuffer[0].size()= " << m_vSignalBuffer[0].size();
+    if ( m_vSignalBuffer[0].size()==2*100)
+        emit sigBroadcastBufferedValues(m_vSignalBuffer);
 }

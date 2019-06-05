@@ -95,7 +95,7 @@ MainWindow::~MainWindow()
         delete m_pMainLayout;
 }
 
-void MainWindow::setSignalValues(std::vector<float> vSignalValues)
+void MainWindow::setSignalValues(float timestamp, std::vector<float> vSignalValues)
 {
     m_pSignalDisplay->setNewValues(vSignalValues);
 }
