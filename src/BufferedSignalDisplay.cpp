@@ -51,14 +51,14 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
             m_fXRescaleFactorB = -m_fXRescaleFactorA * m_oXRange.width();
 
             // x-ticks > 0
-            for (uint l_xTick = 0; l_xTick < m_oXRange.height() / m_i32XTic; ++l_xTick)
+            for (int l_xTick = 0; l_xTick < m_oXRange.height() / m_i32XTic; ++l_xTick)
             {
                 l_oPainter.drawLine(	QPoint((l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, 0),
                                         QPoint((l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, m_oSize.height()));
             }
 
             // x-ticks < 0
-            for (uint l_xTick = 0; l_xTick > m_oXRange.width() / m_i32XTic; --l_xTick)
+            for (int l_xTick = 0; l_xTick > m_oXRange.width() / m_i32XTic; --l_xTick)
             {
                 l_oPainter.drawLine(	QPoint((l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, 0),
                                         QPoint((l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, m_oSize.height()));
@@ -66,7 +66,7 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
 
 
             // y-ticks > 0
-            for (uint l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
+            for (int l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
             {
                 l_oPainter.drawLine(	QPoint(0, (l_yTick * m_i32YTic) * m_fYRescaleFactorA + m_fYRescaleFactorB),
                                         QPoint(m_oSize.width(), (l_yTick * m_i32YTic) * m_fYRescaleFactorA + m_fYRescaleFactorB));
@@ -81,7 +81,7 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
 
             // draw legends
             // x-axis > 0
-            for (uint l_xTick = 0; l_xTick < m_oXRange.height() / m_i32XTic; ++l_xTick)
+            for (int l_xTick = 0; l_xTick < m_oXRange.height() / m_i32XTic; ++l_xTick)
             {
                 std::ostringstream l_osXLegend;
                 l_osXLegend << l_xTick * m_i32XTic;
@@ -103,7 +103,7 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
             }
 
             // y-axis > 0
-            for (uint l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
+            for (int l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
             {
                 std::ostringstream l_osYLegend;
                 l_osYLegend << l_yTick * m_i32YTic;

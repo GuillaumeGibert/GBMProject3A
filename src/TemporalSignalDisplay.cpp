@@ -24,7 +24,7 @@ void TemporalSignalDisplay::setNewValues(std::vector<float> aFCurvesValues)
 			bool l_bIsSroll = false;
 			m_bDrawCurves = true;
 
-            for (uint ii = 0; ii < m_i32NumberOfSignals; ++ii)
+            for (int ii = 0; ii < m_i32NumberOfSignals; ++ii)
 			{
                 if (m_vSignalValues[ii].size() == (m_oXRange.height() - m_oXRange.width()) * m_fFps)
 				{
@@ -66,7 +66,7 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 		l_oPainter.setPen(Qt::white);
 
 		// x-ticks
-        for (uint l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
+        for (int l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
 		{
             if (l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic > 0 && l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic < m_oSize.width()*m_fFps)
 				l_oPainter.drawLine(	QPoint((l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic) * m_fXRescaleFactorA + m_fXRescaleFactorB, 0),
@@ -74,7 +74,7 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 		}
 
 		// y-ticks > 0
-		for (uint l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
+        for (int l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
 		{
 			l_oPainter.drawLine(	QPoint(0, (l_yTick * m_i32YTic) * m_fYRescaleFactorA + m_fYRescaleFactorB),
 									QPoint(m_oSize.width(), (l_yTick * m_i32YTic) * m_fYRescaleFactorA + m_fYRescaleFactorB));
@@ -89,7 +89,7 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 		
 		// draw legends
 		// x-axis
-		for (uint l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
+        for (int l_xTick = 0; l_xTick < (m_oXRange.height() - m_oXRange.width()) / m_i32XTic + 1; ++l_xTick)
 		{
             if (l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic > 0 && l_xTick * (m_fFps * m_i32XTic) - m_i32ScrollingOffsetXTic < m_oSize.width()*m_fFps)
 			{
@@ -103,7 +103,7 @@ void TemporalSignalDisplay::paintEvent(QPaintEvent *)
 		}
 
 		// y-axis > 0
-		for (uint l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
+        for (int l_yTick = 0; l_yTick < m_oYRange.height() / m_i32YTic; ++l_yTick)
 		{
             std::ostringstream l_osYLegend;
 			l_osYLegend << l_yTick * m_i32YTic;
