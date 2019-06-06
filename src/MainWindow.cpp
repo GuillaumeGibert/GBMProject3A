@@ -43,9 +43,9 @@ MainWindow::MainWindow()
     QVBoxLayout *vboxSignal = new QVBoxLayout;
     std::vector<QCheckBox*> vSignalCheckBoxes;
 
-    for (int l_cb = 0; l_cb < vSignalLabels.size(); l_cb++)
+    for (int l_cb = 0; l_cb < static_cast<int>(vSignalLabels.size()); l_cb++)
     {
-        QCheckBox* l_ocb = new QCheckBox(QString::fromStdString(vSignalLabels[l_cb]));
+        QCheckBox* l_ocb = new QCheckBox(QString::fromStdString(vSignalLabels[static_cast<unsigned long long>(l_cb)]));
         l_ocb->setChecked(true);
         l_ocb->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
         vboxSignal->addWidget(l_ocb);
@@ -57,10 +57,10 @@ MainWindow::MainWindow()
 
     // connects check box signals to enable/disable display via a signal mapper
     QSignalMapper* sigMapper = new QSignalMapper;
-    for (int l_cb = 0; l_cb < vSignalLabels.size(); l_cb++)
+    for (int l_cb = 0; l_cb < static_cast<int>(vSignalLabels.size()); l_cb++)
     {
-        QObject::connect(vSignalCheckBoxes[l_cb], SIGNAL(stateChanged(int)), sigMapper, SLOT(map()));
-        sigMapper->setMapping(vSignalCheckBoxes[l_cb], l_cb);
+        QObject::connect(vSignalCheckBoxes[static_cast<unsigned long long>(l_cb)], SIGNAL(stateChanged(int)), sigMapper, SLOT(map()));
+        sigMapper->setMapping(vSignalCheckBoxes[static_cast<unsigned long long>(l_cb)], l_cb);
     }
     QObject::connect(sigMapper, SIGNAL(mapped(int)), m_pSignalDisplay, SLOT(setSignalEnabled(int)));
     QObject::connect(sigMapper, SIGNAL(mapped(int)), m_pFilteredSignalDisplay, SLOT(setSignalEnabled(int)));
