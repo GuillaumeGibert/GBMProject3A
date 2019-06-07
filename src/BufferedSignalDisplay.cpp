@@ -1,5 +1,7 @@
 #include "BufferedSignalDisplay.h"
 
+#include <QDebug>
+
 BufferedSignalDisplay::BufferedSignalDisplay()
 {}
 
@@ -44,7 +46,10 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
             // gets x-axis features
             m_oXRange.setWidth(m_vSignalValues[0][0]);
             m_oXRange.setHeight(m_vSignalValues[0][m_vSignalValues[0].size() - 1]);
-
+//m_oXRange.setHeight(2);
+            qDebug() << "m_oXRange= " << m_oXRange;
+            qDebug() << "m_vSignalValues[0].size()= " << m_vSignalValues[0].size();
+            qDebug() << "m_vSignalValues[0][m_vSignalValues[0].size() - 1]= " << m_vSignalValues[0][m_vSignalValues[0].size() - 1];
             // computes rescaling factors y = Ax + B
             // x-axis
             m_fXRescaleFactorA = (float)(m_oSize.width()) / ((m_oXRange.height() - m_oXRange.width()));

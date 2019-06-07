@@ -38,6 +38,7 @@ private:
     int m_i32FilterOrder;
     int m_i32NbSignals;
     float m_fFps;
+    int m_i32SampleIndex;
 };
 
 #endif // SIGNALPROCESSING_H

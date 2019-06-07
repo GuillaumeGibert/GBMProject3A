@@ -13,6 +13,8 @@ SignalProcessing::SignalProcessing()
 
     m_pFilter->setAFilterCoefficients(l_aFilterCoefs);
     m_pFilter->setBFilterCoefficients(l_bFilterCoefs);
+
+    m_i32SampleIndex=1;
 }
 
 
@@ -48,7 +50,14 @@ void SignalProcessing::setInputData(float timestamp, std::vector<float> vInputDa
     std::vector<float> vOutputSignal;
 
     if (m_vSignalBuffer[0].size() < 2*100)
-        m_vSignalBuffer[0].push_back(timestamp);
+    {
+        //m_vSignalBuffer[0].push_back(timestamp);
+        m_vSignalBuffer[0].push_back((float)m_i32SampleIndex / 100);
+        //qDebug() << "m_vSignalBuffer[0][m_i32SampleIndex] = " << m_vSignalBuffer[0][m_i32SampleIndex];
+    }
+
+    m_i32SampleIndex++;
+
     //if ( m_vSignalBuffer[0].size()>2*100)
     //    m_vSignalBuffer[0].pop_front();
 
@@ -75,7 +84,7 @@ void SignalProcessing::setInputData(float timestamp, std::vector<float> vInputDa
 
     emit sigBroadcastFilteredValues(vOutputSignal);
 
-    qDebug() << "m_vSignalBuffer[0].size()= " << m_vSignalBuffer[0].size();
+    //qDebug() << "m_vSignalBuffer[0].size()= " << m_vSignalBuffer[0].size();
     if ( m_vSignalBuffer[0].size()==2*100)
         emit sigBroadcastBufferedValues(m_vSignalBuffer);
 }
