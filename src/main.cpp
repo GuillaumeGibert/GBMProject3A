@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     //=======Qt CONNECTIONS=========
     if (ARDUINO)
     {
-        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &window, SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(float, std::vector<float>)), &window, SLOT(setSignalValues(float, std::vector<float>)));
         QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(float, std::vector<float>)), &sp, SLOT(setInputData(float, std::vector<float>)));
     }
     else
