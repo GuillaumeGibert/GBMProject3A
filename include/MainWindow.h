@@ -2,6 +2,7 @@
 #define MAIN_WINDOW_H
 
 #include <QWidget>
+#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QCheckBox>
@@ -22,12 +23,16 @@ class MainWindow: public QWidget
         void setSignalValues(float, std::vector<float> vSignalValues);
         void setFilteredSignalValues(std::vector<float> vFilteredSignalValues);
         void setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues);
+        void setPowerSpectrumValues(std::vector<std::deque<float>> vPowerSpectrumValues);
 
     private:
         TemporalSignalDisplay* m_pSignalDisplay;
         TemporalSignalDisplay* m_pFilteredSignalDisplay;
         BufferedSignalDisplay* m_pBufferedSignalDisplay;
-        QHBoxLayout* m_pMainLayout;
+        BufferedSignalDisplay* m_pPowerSpectrumDisplay;
+        QVBoxLayout* m_pMainLayout;
+        QHBoxLayout* m_pSignalLayout;
+        QHBoxLayout* m_pFourierLayout;
 
 };
 

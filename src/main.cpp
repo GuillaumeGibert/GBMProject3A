@@ -3,9 +3,12 @@
 #include "SerialPortManager.h"
 #include "SignalProcessing.h"
 #include "SineGenerator.h"
+#include "Buffering.h"
 #include "MainWindow.h"
 
 #define ARDUINO false
+#define NB_SIGNALS 5
+#define FPS 100.0
 
 int main(int argc, char *argv[])
 {
@@ -34,8 +37,8 @@ int main(int argc, char *argv[])
     SineGenerator signalGenerator;
 
     // sets generator features
-    signalGenerator.setNbSignals(5);
-    signalGenerator.setFps(100.0);
+    signalGenerator.setNbSignals(NB_SIGNALS);
+    signalGenerator.setFps(FPS);
     std::vector<float> vAmplitudes{ 50.0f, 50.0f, 50.0f, 50.0f, 50.0f };
     signalGenerator.setAmplitudes(vAmplitudes);
     std::vector<float> vFrequencies{ 1.0f, 2.0f, 3.0f, 5.0f, 10.0f };
@@ -50,20 +53,28 @@ int main(int argc, char *argv[])
         // opens the serial port
         spm.openSerialPort();
 
-        // at this point, the spm object is sending data through its sigBroadcastSerialPortValues signal
+        // at this point, the spm object is sending data through its sigBroadcastSignalValues signal
     }
     else
     {
         // start the worker
         signalGenerator.startWork();
 
-        // at this point, the signalGenerator object is sending data through its sigBroadcastSerialPortValues signal
+        // at this point, the signalGenerator object is sending data through its sigBroadcastSignalValues signal
     }
 
     //=======SIGNAL PROCESSING=========
     // creates a signal processing object
     SignalProcessing sp;
-    sp.setNbSignals(5);
+    sp.setNbSignals(NB_SIGNALS);
+
+    //=======BUFFERING=========
+    // creates a buffering object
+    Buffering buffer;
+    buffer.setFps(FPS);
+    buffer.setNbSignals(NB_SIGNALS);
+    buffer.setDuration(2.0);
+    buffer.setShift(0.5);
 
     //=======MAIN WINDOW=========
     // creates the Main Window
@@ -74,17 +85,19 @@ int main(int argc, char *argv[])
     //=======Qt CONNECTIONS=========
     if (ARDUINO)
     {
-        QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(float, std::vector<float>)), &window, SLOT(setSignalValues(float, std::vector<float>)));
-        QObject::connect(&spm, SIGNAL(sigBroadcastSerialPortValues(float, std::vector<float>)), &sp, SLOT(setInputData(float, std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &window,    SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &sp,        SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&spm, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &buffer,    SLOT(setSignalValues(float, std::vector<float>)));
     }
     else
     {
-        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &window, SLOT(setSignalValues(float, std::vector<float>)));
-        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &sp, SLOT(setInputData(float, std::vector<float>)));
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &window,    SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &sp,        SLOT(setSignalValues(float, std::vector<float>)));
+        QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &buffer,    SLOT(setSignalValues(float, std::vector<float>)));
     }
 
-    QObject::connect(&sp, SIGNAL(sigBroadcastFilteredValues(std::vector<float>)), &window, SLOT(setFilteredSignalValues(std::vector<float>)));
-    QObject::connect(&sp, SIGNAL(sigBroadcastBufferedValues(std::vector<std::deque<float>>)), &window, SLOT(setBufferedSignalValues(std::vector<std::deque<float>>)));
+    QObject::connect(&sp,       SIGNAL(sigBroadcastFilteredSignalValues(std::vector<float>)),               &window, SLOT(setFilteredSignalValues(std::vector<float>)));
+    QObject::connect(&buffer,   SIGNAL(sigBroadcastBufferedSignalValues(std::vector<std::deque<float>>)),   &window, SLOT(setBufferedSignalValues(std::vector<std::deque<float>>)));
 
     return app.exec();
 }

@@ -9,7 +9,8 @@ HEADERS = 	include/SerialPortManager.h \
 		include/BufferedSignalDisplay.h \
                 include/SineGenerator.h \
                 include/TemporalFilter.h \
-                include/MainWindow.h
+                include/MainWindow.h \
+		include/Buffering.h
 
 SOURCES = 	src/SerialPortManager.cpp \
                 src/SignalProcessing.cpp \
@@ -19,6 +20,7 @@ SOURCES = 	src/SerialPortManager.cpp \
                 src/MainWindow.cpp \
                 src/SineGenerator.cpp \
                 src/TemporalFilter.cpp \
+		src/Buffering.cpp \
                 src/main.cpp
    
                 

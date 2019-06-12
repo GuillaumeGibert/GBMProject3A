@@ -430,7 +430,7 @@ void SerialPortManager::readData()
 		}
 		
         // sends the data through a signal
-        emit sigBroadcastSerialPortValues((float)m_pElapsedTimer->elapsed() / 1000.0, m_vDataBuffer);
+        emit sigBroadcastSignalValues((float)m_pElapsedTimer->elapsed() / 1000.0, m_vDataBuffer);
 
 		// prints values 
         if (m_bVerboseMode)

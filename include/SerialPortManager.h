@@ -42,7 +42,7 @@ class SerialPortManager : public QObject
 		void handleError(QSerialPort::SerialPortError error);
 	
 	signals:
-    void sigBroadcastSerialPortValues(float, std::vector<float>);
+    void sigBroadcastSignalValues(float, std::vector<float>);
 		
 	private:
         QSerialPort* m_pSerialPort;
