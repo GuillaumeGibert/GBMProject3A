@@ -18,12 +18,13 @@ public:
 
 public:
     void setNbSignals(int);
+    void setFps(float);
 
 public slots:
-    void setInputData(std::vector<float>);
+    void setSignalValues(float, std::vector<float>);
 
 signals:
-    void sigBroadcastFilteredValues(std::vector<float>);
+    void sigBroadcastFilteredSignalValues(std::vector<float>);
 
 private:
     TemporalFilter* m_pFilter;
@@ -31,6 +32,7 @@ private:
     std::vector<std::deque<float>> m_vBufferedFilteredSignals;
     int m_i32FilterOrder;
     int m_i32NbSignals;
+    float m_fFps;
 };
 
 #endif // SIGNALPROCESSING_H

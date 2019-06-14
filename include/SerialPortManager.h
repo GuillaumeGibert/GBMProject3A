@@ -8,6 +8,8 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 
+#include <QElapsedTimer>
+
 class SerialPortManager : public QObject
 {
 	Q_OBJECT
@@ -40,7 +42,7 @@ class SerialPortManager : public QObject
 		void handleError(QSerialPort::SerialPortError error);
 	
 	signals:
-	void sigBroadcastSerialPortValues(std::vector<float>);
+    void sigBroadcastSignalValues(float, std::vector<float>);
 		
 	private:
         QSerialPort* m_pSerialPort;
@@ -68,6 +70,8 @@ class SerialPortManager : public QObject
 		char m_cValueSeparator;
 
 		std::vector<float> m_vDataBuffer;
+
+        QElapsedTimer* m_pElapsedTimer;
 	
 };
 

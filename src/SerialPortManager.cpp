@@ -8,7 +8,8 @@ SerialPortManager::SerialPortManager(bool bVerboseMode) :
 	m_bIsBeginKeywordSet(false), m_bIsEndKeywordSet(false), m_bIsValueSeparatorSet(false),
 	m_bIsPortFound(false), m_bIsPortConnected(false),
 	m_bFirstPortFound(true),
-    m_pSerialPort(nullptr)
+    m_pSerialPort(nullptr),
+    m_pElapsedTimer(new QElapsedTimer)
 {
 	if (nullptr == m_pSerialPort)
 	{
@@ -41,6 +42,9 @@ SerialPortManager::~SerialPortManager()
 		delete m_pSerialPort;
 		m_pSerialPort = nullptr;
 	}
+
+    if(nullptr != m_pElapsedTimer)
+        delete m_pElapsedTimer;
 	
     if (m_bVerboseMode)
 		qInfo() << "[INFO] <SerialPortManager> QSerialPort destroyed";
@@ -277,6 +281,7 @@ bool SerialPortManager::openSerialPort()
 		if (m_pSerialPort->open(QIODevice::ReadWrite))
 		{
 			m_bIsPortConnected = true;
+            m_pElapsedTimer->start();
 
 			if (m_bVerboseMode)
 				qInfo() << "[INFO] <SerialPortManager> QSerialPort opened";
@@ -425,7 +430,7 @@ void SerialPortManager::readData()
 		}
 		
         // sends the data through a signal
-        emit sigBroadcastSerialPortValues(m_vDataBuffer);
+        emit sigBroadcastSignalValues((float)m_pElapsedTimer->elapsed() / 1000.0, m_vDataBuffer);
 
 		// prints values 
         if (m_bVerboseMode)

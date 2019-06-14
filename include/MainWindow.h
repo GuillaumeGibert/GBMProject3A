@@ -2,12 +2,14 @@
 #define MAIN_WINDOW_H
 
 #include <QWidget>
+#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QSignalMapper>
 
 #include "TemporalSignalDisplay.h"
+#include "BufferedSignalDisplay.h"
 
 class MainWindow: public QWidget
 {
@@ -18,13 +20,19 @@ class MainWindow: public QWidget
         virtual ~MainWindow();
 
     public slots:
-        void setSignalValues(std::vector<float> vSignalValues);
+        void setSignalValues(float, std::vector<float> vSignalValues);
         void setFilteredSignalValues(std::vector<float> vFilteredSignalValues);
+        void setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues);
+        void setPowerSpectrumValues(std::vector<std::deque<float>> vPowerSpectrumValues);
 
     private:
         TemporalSignalDisplay* m_pSignalDisplay;
         TemporalSignalDisplay* m_pFilteredSignalDisplay;
-        QHBoxLayout* m_pMainLayout;
+        BufferedSignalDisplay* m_pBufferedSignalDisplay;
+        BufferedSignalDisplay* m_pPowerSpectrumDisplay;
+        QVBoxLayout* m_pMainLayout;
+        QHBoxLayout* m_pSignalLayout;
+        QHBoxLayout* m_pFourierLayout;
 
 };
 
