@@ -4,6 +4,7 @@
 #include "SignalProcessing.h"
 #include "SineGenerator.h"
 #include "Buffering.h"
+#include "FFT.h"
 #include "MainWindow.h"
 
 #define ARDUINO false
@@ -74,7 +75,13 @@ int main(int argc, char *argv[])
     buffer.setFps(FPS);
     buffer.setNbSignals(NB_SIGNALS);
     buffer.setDuration(2.0);
-    buffer.setShift(0.5);
+    buffer.setShift(1.0);
+
+    //=======FFT=========
+    // creates a FFT object
+    FFT fft;
+    fft.setFps(FPS);
+    fft.setNbSignals(NB_SIGNALS);
 
     //=======MAIN WINDOW=========
     // creates the Main Window
@@ -96,8 +103,10 @@ int main(int argc, char *argv[])
         QObject::connect(&signalGenerator, SIGNAL(sigBroadcastSignalValues(float, std::vector<float>)), &buffer,    SLOT(setSignalValues(float, std::vector<float>)));
     }
 
-    QObject::connect(&sp,       SIGNAL(sigBroadcastFilteredSignalValues(std::vector<float>)),               &window, SLOT(setFilteredSignalValues(std::vector<float>)));
-    QObject::connect(&buffer,   SIGNAL(sigBroadcastBufferedSignalValues(std::vector<std::deque<float>>)),   &window, SLOT(setBufferedSignalValues(std::vector<std::deque<float>>)));
+    QObject::connect(&sp,       SIGNAL(sigBroadcastFilteredSignalValues(std::vector<float>)),               &window,    SLOT(setFilteredSignalValues(std::vector<float>)));
+    QObject::connect(&buffer,   SIGNAL(sigBroadcastBufferedSignalValues(std::vector<std::deque<float>>)),   &window,    SLOT(setBufferedSignalValues(std::vector<std::deque<float>>)));
+    QObject::connect(&buffer,   SIGNAL(sigBroadcastBufferedSignalValues(std::vector<std::deque<float>>)),   &fft,       SLOT(setBufferedSignalValues(std::vector<std::deque<float>>)));
+    QObject::connect(&fft,      SIGNAL(sigBroadcastPowerSpectrumValues(std::vector<std::deque<float>>)),    &window,    SLOT(setPowerSpectrumValues(std::vector<std::deque<float>>)));
 
     return app.exec();
 }

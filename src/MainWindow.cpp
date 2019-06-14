@@ -46,9 +46,9 @@ MainWindow::MainWindow()
         m_pPowerSpectrumDisplay->setSignalLabels(vSignalLabels);
         m_pPowerSpectrumDisplay->setFps(FPS); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
         m_pPowerSpectrumDisplay->setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
-        m_pPowerSpectrumDisplay->setXYRange(QSize(-50, 50), QSize(0, 2)); // for the sine generator
+        m_pPowerSpectrumDisplay->setXYRange(QSize(0, FPS), QSize(0, 250)); // for the sine generator
         m_pPowerSpectrumDisplay->setLegends("Frequency (Hz)", "Power Spectrum");
-        m_pPowerSpectrumDisplay->setTicks(1, 5);
+        m_pPowerSpectrumDisplay->setTicks(10, 50);
         m_pPowerSpectrumDisplay->setDrawLine(true);
 
     // creates an array of checkboxes to enabe/disable the display of specific signals
@@ -87,16 +87,14 @@ MainWindow::MainWindow()
     m_pSignalLayout = new QHBoxLayout();
         m_pSignalLayout->addWidget(m_pSignalDisplay);
         m_pSignalLayout->addWidget(m_pFilteredSignalDisplay);
-        //m_pSignalLayout->addWidget(groupBoxSignal);
 
-    m_pFourierLayout = new QHBoxLayout();
+   m_pFourierLayout = new QHBoxLayout();
         m_pFourierLayout->addWidget(m_pBufferedSignalDisplay);
         m_pFourierLayout->addWidget(m_pPowerSpectrumDisplay);
 
     m_pMainLayout = new QVBoxLayout();
         m_pMainLayout->addLayout(m_pSignalLayout);
         m_pMainLayout->addLayout(m_pFourierLayout);
-
 
     // attachs the layout to the main window
     setLayout(m_pMainLayout);

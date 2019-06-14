@@ -2,7 +2,6 @@
 
 FFT::FFT()
 {
-    m_vf64InSignal.clear();
     m_bTrigoTablesComputed = false;
     m_i32InSignalLength = 0;
 }
@@ -26,18 +25,81 @@ void FFT::setFps(float fFps)
 
 void FFT::setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues)
 {
+    std::vector<std::deque<float>> l_vPowerSpectrumValues;
+
+    // creates the x-axis deque
+    std::deque<float> l_dSpectrumFrequency;
+    unsigned long l_i64NbFrequencies = findUpperPowerOfTwo(vBufferedSignalValues[0].size());
+
+    for (int l_freq = 0; l_freq < l_i64NbFrequencies; l_freq++)
+    {
+        l_dSpectrumFrequency.push_back((float)l_freq * m_fFps / l_i64NbFrequencies);
+    }
+    l_vPowerSpectrumValues.push_back(l_dSpectrumFrequency);
+
+
     for (auto l_signal = 0; l_signal < m_i32NbSignals; l_signal++)
     {
         std::vector<float> l_vCurrentBufferedSignal = {vBufferedSignalValues[l_signal+1].begin(), vBufferedSignalValues[l_signal+1].end()};
+        // padding
+        std::vector<float> l_vCurrentPaddedSignal;
+        pad(l_vCurrentBufferedSignal, l_vCurrentPaddedSignal);
+        // windowing
+        std::vector<float> l_vCurrentWindowedSignal;
+        hannWindow(l_vCurrentPaddedSignal, l_vCurrentWindowedSignal);
+        // FFT
+        std::vector<float> l_vFFTRealPart, l_vFFTImagPart;
+        compute(l_vCurrentWindowedSignal, l_vFFTRealPart, l_vFFTImagPart);
+        // PowerSpectrum
+        std::vector<float> l_vFFTPowerSpectrum;
+        powerSpectrum(l_vFFTRealPart, l_vFFTImagPart, l_vFFTPowerSpectrum);
+        // Phase Spectrum
+        std::vector<float> l_vFFTPhaseSpectrum;
+        phaseSpectrum(l_vFFTRealPart, l_vFFTImagPart, l_vFFTPhaseSpectrum);
+
+        std::deque<float> l_dPowerSpectrum = {l_vFFTPowerSpectrum.begin(), l_vFFTPowerSpectrum.end()};
+        l_vPowerSpectrumValues.push_back(l_dPowerSpectrum);
+    }
+
+    emit sigBroadcastPowerSpectrumValues(l_vPowerSpectrumValues);
+}
+
+void FFT::pad(std::vector<float> &vInputSignal, std::vector<float> &vPaddedSignal)
+{
+    if (vInputSignal.size() == 0)
+        return;
+    else if ((vInputSignal.size() & (vInputSignal.size() - 1)) == 0)  // Is power of 2
+    {
+        vPaddedSignal = vInputSignal;
+    }
+    else
+    {
+        vPaddedSignal.resize(findUpperPowerOfTwo(vInputSignal.size()));
+        std::fill(vPaddedSignal.begin(), vPaddedSignal.end(), 0.0f);
+        memcpy(&vPaddedSignal.at(0), &vInputSignal.at(0), vInputSignal.size());
     }
 }
 
-void FFT::compute()
+unsigned long FFT::findUpperPowerOfTwo(unsigned long v)
+{
+    // To test
+    //unsigned long next = pow(2, ceil(log(v)/log(2)));
+    v--;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    v++;
+    return v;
+}
+
+void FFT::compute(std::vector<float> &vInputSignal, std::vector<float> &vFFTRealPart, std::vector<float> &vFFTImagPart)
 {
     // sets the real and imag parts of the input signal
     // our input signal is always real
-    std::vector<double> l_vf64SignalReal(m_vf64InSignal);
-    std::vector<double> l_vf64SignalImag(l_vf64SignalReal.size(), 0.0);
+    std::vector<float> l_vf64SignalReal(vInputSignal);
+    std::vector<float> l_vf64SignalImag(l_vf64SignalReal.size(), 0.0);
 
     std::size_t n = l_vf64SignalReal.size();
     if (n == 0)
@@ -45,13 +107,13 @@ void FFT::compute()
     else if ((n & (n - 1)) == 0)  // Is power of 2
         transformRadix2(l_vf64SignalReal, l_vf64SignalImag);
     else  // More complicated algorithm for arbitrary sizes
-        //transformBluestein(l_vf64SignalReal, l_vf64SignalImag);
+        qDebug() << "[ERROR] (FFT::compute) : input signal is not padded!";
 
-    m_vf64RealDFT = l_vf64SignalReal;
-    m_vf64ImagDFT = l_vf64SignalImag;
+    vFFTRealPart = l_vf64SignalReal;
+    vFFTImagPart = l_vf64SignalImag;
 }
 
-void FFT::transformRadix2(std::vector<double> &real, std::vector<double> &imag)
+void FFT::transformRadix2(std::vector<float> &real, std::vector<float> &imag)
 {
     // Compute levels = floor(log2(n))
     if (real.size() != imag.size())
@@ -137,59 +199,43 @@ std::size_t FFT::reverseBits(std::size_t x, unsigned int n)
     return result;
 }
 
-void FFT::powerSpectrum()
+void FFT::powerSpectrum(std::vector<float> &vFFTRealPart, std::vector<float> &vFFTImagPart, std::vector<float> &vFFTPowerSpectrum)
 {
-    std::size_t n = m_vf64RealDFT.size();
+    std::size_t n = vFFTRealPart.size();
     if (n == 0)
         return;
 
-    m_vf64PowerSpectrum.resize(n);
+    vFFTPowerSpectrum.resize(n);
     for (std::size_t i = 0; i < n; i++)
     {
-        m_vf64PowerSpectrum[i] = sqrt(pow(m_vf64RealDFT[i],2) + pow(m_vf64ImagDFT[i],2));
+        vFFTPowerSpectrum[i] = sqrt(pow(vFFTRealPart[i],2) + pow(vFFTImagPart[i],2));
     }
 }
 
-void FFT::phaseSpectrum()
+void FFT::phaseSpectrum(std::vector<float> &vFFTRealPart, std::vector<float> &vFFTImagPart, std::vector<float> &vFFTPowerSpectrum)
 {
-    std::size_t n = m_vf64RealDFT.size();
+    std::size_t n = vFFTRealPart.size();
     if (n == 0)
         return;
 
-    m_vf64PhaseSpectrum.resize(n);
+    vFFTPowerSpectrum.resize(n);
     for (std::size_t i = 0; i < n; i++)
     {
-        m_vf64PhaseSpectrum[i] = atan2(m_vf64ImagDFT[i], m_vf64RealDFT[i]);
+        vFFTPowerSpectrum[i] = atan2(vFFTImagPart[i], vFFTRealPart[i]);
     }
 }
 
-void FFT::hannWindow(std::vector<double>& inSignal, std::vector<double>& outSignal)
+void FFT::hannWindow(std::vector<float>& inSignal, std::vector<float>& outSignal)
 {
     std::size_t n = inSignal.size();
-
     if (n == 0)
         return;
 
     for (std::size_t i=0; i < n; i++)
     {
         double multiplier = 0.5 * (1 - cos(2*M_PI*i/(n-1)));
-        outSignal[i] = multiplier * inSignal[i];
+        outSignal.push_back(multiplier * inSignal[i]);
     }
 }
 
-void FFT::findPowerSpectrumPeak(int low, int high)
-{
-    int index = low;
-    double biggestValue = 0;
 
-    for (int l_sample=low; l_sample<high; l_sample++)
-    {
-        if (m_vf64PowerSpectrum[l_sample]>biggestValue)
-        {
-            biggestValue = m_vf64PowerSpectrum[l_sample];
-            index = l_sample;
-        }
-    }
-    m_f64PowerSpectrumPeak = biggestValue;
-    m_i32PowerSpectrumPeakIndex = index;
-}
