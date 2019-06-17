@@ -36,6 +36,9 @@ The buffered signals as well as the Power spectrum are sent to the MainWindow fo
 
 Screenshot :
 -------------
+
+![Screenshot](doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
+
 At the top left corner, 2s window of raw signals updated at each time step (100 Hz in the example). 
 
 At the top right corner, 2s window of filtered signals updated at each time step (same frequency as above).
@@ -43,8 +46,6 @@ At the top right corner, 2s window of filtered signals updated at each time step
 At the bottom left corner, 2s window of raw buffered signals updated every 1s.
 
 At the bottom right corner, Power spectrum updated for every new buffer (i.e. every 1s).
-
-![Screenshot](doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
 
 Installation :
 -------------
