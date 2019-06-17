@@ -12,7 +12,6 @@ You should install Qt (https://www.qt.io/) and Arduino (https://www.arduino.cc/e
 
 Content :
 ---------
-![Structure](doc/images/GBMProject3A_structure.jpg?raw=true "Structure")
 
 * A dummy ino file that sends through the serial port the analog input values read on the arduino
 * A class called SerialPortManager based on QTSerialPort gets data from the serial port, segments it and emits the corresponding vector of floats with timestamp.
@@ -23,7 +22,22 @@ Content :
 * A display class called TemporalSignalDisplay gets the vector of floats on its slot setNewValues and display it.
 * A display class called BufferedSignalDisplay gets (either temporal or frequency) buffer of data  and display it.
 
-![Screenshot](https://github.com/GuillaumeGibert/GBMProject3A/blob/develop/doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
+The current version of the software is structured as shown below. 
+Signals are retrieved from either the SerialPortManager or the SineGenerator objects. The raw signals are sent to the MainWindow for display.
+The raw signals are sent to the SignalProcessing object for filtering (IIR). The filtered signals are sent to the MainWindow for display.
+The raw signals are also sent to the Buffering object that creates a buffer and sent it to the FFT object that computes the Power Spectrum.
+The buffered signals as well as the Power spectrum are sent to the MainWindow for display.
+
+![Structure](doc/images/GBMProject3A_structure.jpg?raw=true "Structure")
+
+Screenshot :
+-------------
+At the top left corner, 2s window of raw signals updated at each time step (100 Hz in the example). 
+At the top right corner, 2s window of filtered signals updated at each time step (same frequency as above).
+At the bottom left corner, 2s window of raw buffered signals updated every 1s.
+At the bottom right corner, Power spectrum updated for every new buffer (i.e. every 1s).
+
+![Screenshot](doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
 
 Installation :
 -------------
