@@ -46,7 +46,7 @@ MainWindow::MainWindow()
         m_pPowerSpectrumDisplay->setSignalLabels(vSignalLabels);
         m_pPowerSpectrumDisplay->setFps(FPS); // watch out fps must be set before setting XY range AND must be the same than the retrieved signals (from serial port or sine generator)
         m_pPowerSpectrumDisplay->setXYRange(QSize(0, 20), QSize(250, 350)); // for arduino if nothing connected to analogic inputs (A0..A5)
-        m_pPowerSpectrumDisplay->setXYRange(QSize(0, FPS), QSize(0, 250)); // for the sine generator
+        m_pPowerSpectrumDisplay->setXYRange(QSize(0, FPS), QSize(-10, 250)); // for the sine generator
         m_pPowerSpectrumDisplay->setLegends("Frequency (Hz)", "Power Spectrum");
         m_pPowerSpectrumDisplay->setTicks(10, 50);
         m_pPowerSpectrumDisplay->setDrawLine(true);
@@ -81,7 +81,7 @@ MainWindow::MainWindow()
     QObject::connect(sigMapper, SIGNAL(mapped(int)), m_pPowerSpectrumDisplay,   SLOT(setSignalEnabled(int)));
 
     // resizes the main window
-    resize(1800, 1000);
+    resize(1400, 1000);
 
     // designs the interface
     m_pSignalLayout = new QHBoxLayout();

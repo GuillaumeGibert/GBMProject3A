@@ -35,7 +35,7 @@ SignalDisplay::SignalDisplay()
 	setXTickLabelOffsets(10, -10);
 	setYTickLabelOffsets(10, 10);
 	setSignalLabelOffsets(20, 20);
-	setXLegendOffsets(-50, -20);
+    setXLegendOffsets(-80, -20);
 	setYLegendOffsets(10, 10);
 	setDrawLine(true);
 }

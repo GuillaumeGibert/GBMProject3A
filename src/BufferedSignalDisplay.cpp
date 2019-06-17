@@ -85,8 +85,8 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
             {
                 std::ostringstream l_osXLegend;
                 l_osXLegend << l_xTick * m_i32XTic;
-                l_oPainter.drawText(QPoint(0 + m_i32XTickLabelOffsetX,
-                    (l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB + m_i32XTickLabelOffsetY),
+                l_oPainter.drawText(QPoint((l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB + m_i32XTickLabelOffsetX,
+                    m_oSize.height()  + m_i32XTickLabelOffsetY),
                     l_osXLegend.str().c_str()
                 );
             }
@@ -96,8 +96,8 @@ void BufferedSignalDisplay::paintEvent(QPaintEvent *)
             {
                 std::ostringstream l_osXLegend;
                 l_osXLegend << l_xTick * m_i32XTic;
-                l_oPainter.drawText(QPoint(0 + m_i32XTickLabelOffsetX,
-                    (l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB + m_i32XTickLabelOffsetY),
+                l_oPainter.drawText(QPoint((l_xTick * m_i32XTic) * m_fXRescaleFactorA + m_fXRescaleFactorB + m_i32XTickLabelOffsetX,
+                    m_oSize.height() + m_i32XTickLabelOffsetY),
                     l_osXLegend.str().c_str()
                 );
             }
