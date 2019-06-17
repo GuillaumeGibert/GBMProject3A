@@ -12,7 +12,7 @@ You should install Qt (https://www.qt.io/) and Arduino (https://www.arduino.cc/e
 
 Content :
 ---------
-![Structure] (doc/images/GBMProject3A_structure.jpg?raw=true "Structure")
+![Structure](doc/images/GBMProject3A_structure.jpg?raw=true "Structure")
 
 * A dummy ino file that sends through the serial port the analog input values read on the arduino
 * A class called SerialPortManager based on QTSerialPort gets data from the serial port, segments it and emits the corresponding vector of floats with timestamp.
@@ -23,7 +23,7 @@ Content :
 * A display class called TemporalSignalDisplay gets the vector of floats on its slot setNewValues and display it.
 * A display class called BufferedSignalDisplay gets (either temporal or frequency) buffer of data  and display it.
 
-![Screenshot] (https://github.com/GuillaumeGibert/GBMProject3A/blob/develop/doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
+![Screenshot](https://github.com/GuillaumeGibert/GBMProject3A/blob/develop/doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
 
 Installation :
 -------------
