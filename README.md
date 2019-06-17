@@ -23,7 +23,7 @@ Content :
 * A display class called TemporalSignalDisplay gets the vector of floats on its slot setNewValues and display it.
 * A display class called BufferedSignalDisplay gets (either temporal or frequency) buffer of data  and display it.
 
-![Screenshot] (doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
+![Screenshot] (https://github.com/GuillaumeGibert/GBMProject3A/blob/develop/doc/images/GBMProject3A_screenshot.jpg?raw=true "Screenshot")
 
 Installation :
 -------------
