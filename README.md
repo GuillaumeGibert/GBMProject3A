@@ -27,13 +27,13 @@ On the PC side:
 
 Examples :
 -------------
-* ex1.cpp : a SerialPortManager object is created and then it listens to data emitted on the serial port by the Arduino. It is connected to a Spy object that display the retrieved data.
-* ex2.cpp : a SerialPortManager object is created and then it listens to data emitted using Bluetooth (HC05 module for instance) by the Arduino. It is connected to a Spy object that display the retrieved data.
-* ex3.cpp : a SineGenerator object is created and then it generates sine signals. It is connected to a Spy object that display the generated signal values.
-* ex4.cpp : a SineGenerator object is created and then it generates sine signals. It is connected to a MainWindow object that diplays the signals.
-* ex5.cpp : a SineGenerator object is created and then it generates sine signals. It is connected to a SignalProcessing object that filters the signals. The raw and filtered signals are displayed by a MainWindow object.
-* ex6.cpp : a SineGenerator object is created and then it generates sine signals. It is connected to a Buffer object that creates buffer of signals and sends it to a FFT object. This object computes the Power Spectrum from this buffer. The raw signals and the Power Spectrum are displayed by a MainWindow object. 
-* ex7.cpp : a simple MainWindow object is displayed with two buttons. Each time a button is pressed, a message is sent to the Arduino using a SerialPortManager object. 
+* ex1.cpp (GETTING DATA FROM ARDUINO USB) : a SerialPortManager object is created and then it listens to data emitted on the serial port by the Arduino. It is connected to a Spy object that display the retrieved data.
+* ex2.cpp (GETTING DATA FROM ARDUINO BLUETOOTH) : a SerialPortManager object is created and then it listens to data emitted using Bluetooth (HC05 module for instance) by the Arduino. It is connected to a Spy object that display the retrieved data.
+* ex3.cpp (GETTING DATA FROM SINE GENERATOR) : a SineGenerator object is created and then it generates sine signals. It is connected to a Spy object that display the generated signal values.
+* ex4.cpp (DISPLAYING SIGNAL) : a SineGenerator object is created and then it generates sine signals. It is connected to a MainWindow object that diplays the signals.
+* ex5.cpp (FILTERING SIGNALS) : a SineGenerator object is created and then it generates sine signals. It is connected to a SignalProcessing object that filters the signals. The raw and filtered signals are displayed by a MainWindow object.
+* ex6.cpp (COMPUTING POWER SPECTRUM): a SineGenerator object is created and then it generates sine signals. It is connected to a Buffer object that creates buffer of signals and sends it to a FFT object. This object computes the Power Spectrum from this buffer. The raw signals and the Power Spectrum are displayed by a MainWindow object. 
+* ex7.cpp (WRITING DATA TO ARDUINO USB): a simple MainWindow object is displayed with two buttons. Each time a button is pressed, a message is sent to the Arduino using a SerialPortManager object. 
 
 
 Screenshot :
