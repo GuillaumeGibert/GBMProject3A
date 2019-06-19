@@ -58,7 +58,5 @@ Installation :
 * Choose the example you want to run by adding it to the GBMProject3A.pro file
 * Compile and Run it
 
-The analog input values received by the SignalProcessing object are displayed on the screen together with its power spectrum and (low-pass) filtered ones.
-
 Feel free to modify the code to fit your needs!
 
