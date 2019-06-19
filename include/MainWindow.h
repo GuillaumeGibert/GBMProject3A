@@ -25,14 +25,13 @@ class MainWindow: public QWidget
         void setBufferedSignalValues(std::vector<std::deque<float>> vBufferedSignalValues);
         void setPowerSpectrumValues(std::vector<std::deque<float>> vPowerSpectrumValues);
 
-    private:
+    protected:
         TemporalSignalDisplay* m_pSignalDisplay;
         TemporalSignalDisplay* m_pFilteredSignalDisplay;
         BufferedSignalDisplay* m_pBufferedSignalDisplay;
         BufferedSignalDisplay* m_pPowerSpectrumDisplay;
         QVBoxLayout* m_pMainLayout;
         QHBoxLayout* m_pSignalLayout;
-        QHBoxLayout* m_pFourierLayout;
 
 };
 

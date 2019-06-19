@@ -396,7 +396,7 @@ void SerialPortManager::readData()
 	}
 	
 	// reads all availbale data on the serial port
-	QByteArray dataChunk = m_pSerialPort->readAll();
+    QByteArray dataChunk = m_pSerialPort->readAll();
 	
     // appends the new chunk to the buffer
 	m_oDataBuffer.append(dataChunk);
