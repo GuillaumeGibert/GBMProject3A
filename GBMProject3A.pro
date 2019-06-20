@@ -1,4 +1,4 @@
-QT +=  widgets serialport
+QT +=  widgets serialport sql
 
 INCLUDEPATH += include
 
@@ -33,6 +33,6 @@ SOURCES = 	src/SerialPortManager.cpp \
 		src/Buffering.cpp \
 		src/FFT.cpp \
                 src/Spy.cpp \
-                src/ex5.cpp
+                src/ex8.cpp
    
                 
