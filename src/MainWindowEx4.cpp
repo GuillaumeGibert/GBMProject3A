@@ -52,7 +52,7 @@ MainWindowEx4::MainWindowEx4()
         m_pSignalLayout->addWidget(m_pSignalDisplay);
         m_pSignalLayout->addWidget(groupBoxSignal);
 
-    m_pMainLayout = new QVBoxLayout();
+    m_pMainLayout = new QHBoxLayout();
         m_pMainLayout->addLayout(m_pSignalLayout);
         
 

@@ -14,6 +14,7 @@ HEADERS = 	include/SerialPortManager.h \
                 include/MainWindowEx5.h \
                 include/MainWindowEx6.h \
                 include/MainWindowEx7.h \
+                include/MainWindowEx8.h \
 		include/Buffering.h \
                 include/FFT.h \
                 include/Spy.h
@@ -28,6 +29,7 @@ SOURCES = 	src/SerialPortManager.cpp \
                 src/MainWindowEx5.cpp \
                 src/MainWindowEx6.cpp \
                 src/MainWindowEx7.cpp \
+                src/MainWindowEx8.cpp \
                 src/SineGenerator.cpp \
                 src/TemporalFilter.cpp \
 		src/Buffering.cpp \

@@ -30,7 +30,7 @@ class MainWindow: public QWidget
         TemporalSignalDisplay* m_pFilteredSignalDisplay;
         BufferedSignalDisplay* m_pBufferedSignalDisplay;
         BufferedSignalDisplay* m_pPowerSpectrumDisplay;
-        QVBoxLayout* m_pMainLayout;
+        QHBoxLayout* m_pMainLayout;
         QHBoxLayout* m_pSignalLayout;
 
 };

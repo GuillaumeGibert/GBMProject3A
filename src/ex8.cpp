@@ -1,9 +1,11 @@
 #include <QApplication>
 #include <QtSql>
 
+#include "MainWindowEx8.h"
+
 int main(int argc, char *argv[])
 {
-    //QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QSqlDatabase dbPatient;
     // Instanciation de la variable membre dbPatient
@@ -52,5 +54,11 @@ int main(int argc, char *argv[])
         qDebug() << dbPatient.lastError();
 	}
 
-    //return app.exec();
+    //=======MainWindow=========
+    // creates the Main Window
+    MainWindowEx8 window;
+    // shows the main window
+    window.show();
+
+    return app.exec();
 }

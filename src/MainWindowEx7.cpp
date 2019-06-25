@@ -11,7 +11,7 @@ MainWindowEx7::MainWindowEx7()
     m_pStartButton = new QPushButton("Start");
     m_pStopButton = new QPushButton("Stop");
 	
-    m_pMainLayout = new QVBoxLayout();
+    m_pMainLayout = new QHBoxLayout();
         m_pMainLayout->addWidget(m_pStartButton);
 	m_pMainLayout->addWidget(m_pStopButton);
 

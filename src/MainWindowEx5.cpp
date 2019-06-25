@@ -65,7 +65,7 @@ MainWindowEx5::MainWindowEx5()
 	m_pSignalLayout->addWidget(m_pFilteredSignalDisplay);
         m_pSignalLayout->addWidget(groupBoxSignal);
 
-    m_pMainLayout = new QVBoxLayout();
+    m_pMainLayout = new QHBoxLayout();
         m_pMainLayout->addLayout(m_pSignalLayout);
         
 

@@ -64,7 +64,7 @@ MainWindowEx6::MainWindowEx6()
 	m_pSignalLayout->addWidget(m_pPowerSpectrumDisplay);
         m_pSignalLayout->addWidget(groupBoxSignal);
 
-    m_pMainLayout = new QVBoxLayout();
+    m_pMainLayout = new QHBoxLayout();
         m_pMainLayout->addLayout(m_pSignalLayout);
         
 
