@@ -17,7 +17,8 @@ HEADERS = 	include/SerialPortManager.h \
                 include/MainWindowEx8.h \
 		include/Buffering.h \
                 include/FFT.h \
-                include/Spy.h
+                include/Spy.h \
+                include/DatabaseManager.h
 
 SOURCES = 	src/SerialPortManager.cpp \
                 src/SignalProcessing.cpp \
@@ -35,6 +36,7 @@ SOURCES = 	src/SerialPortManager.cpp \
 		src/Buffering.cpp \
 		src/FFT.cpp \
                 src/Spy.cpp \
+                src/DatabaseManager.cpp \
                 src/ex8.cpp
    
                 
