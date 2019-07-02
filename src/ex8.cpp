@@ -14,13 +14,17 @@ int main(int argc, char *argv[])
     dbManager.setPassword(""); // Mot de passe
     dbManager.setTableName("Patient");
 
-    dbManager.search("Dupont");
+    dbManager.search("Dupond");
 
     //=======MainWindow=========
     // creates the Main Window
     MainWindowEx8 window;
     // shows the main window
     window.show();
+
+    //=======Qt CONNECTIONS=========
+    QObject::connect(&window, SIGNAL(sigBroadcastSearchField(QString)), &dbManager,    SLOT(setSearchField(QString)));
+
 
     return app.exec();
 }

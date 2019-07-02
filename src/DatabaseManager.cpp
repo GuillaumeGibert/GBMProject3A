@@ -103,3 +103,8 @@ bool DatabaseManager::search(QString sKeyword)
 	return m_bIsRequestSuccessfull;
 }
 
+
+void DatabaseManager::setSearchField(QString sNameToLookFor)
+{
+    search(sNameToLookFor);
+}

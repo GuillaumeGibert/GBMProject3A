@@ -19,10 +19,10 @@ class MainWindowEx8: public MainWindow
         virtual ~MainWindowEx8();
     
     public slots:
-		
+        void setSearchButton();
     
     signals:
-   
+        void sigBroadcastSearchField(QString);
 	    
     private:
         QPushButton* m_pbSEARCH;

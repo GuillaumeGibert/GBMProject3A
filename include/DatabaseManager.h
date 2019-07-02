@@ -21,7 +21,8 @@ public:
 	void setTableName(QString);
     bool search(QString);
 
-	
+public slots:
+    void setSearchField(QString);
 	
 
 private:

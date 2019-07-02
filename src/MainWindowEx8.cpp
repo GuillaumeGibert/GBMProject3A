@@ -56,8 +56,8 @@ MainWindowEx8::MainWindowEx8()
        m_pMainLayout->addLayout(m_vblLeftSide);
        m_pMainLayout->addLayout(m_vblRightSide);
 	
-     //=======Qt CONNECTIONS=========
-    //QObject::connect(m_pStartButton, SIGNAL(clicked()), this,    SLOT(setStartButton()));
+    //=======Qt CONNECTIONS=========
+    QObject::connect(m_pbSEARCH, SIGNAL(clicked()), this,    SLOT(setSearchButton()));
    
     // attachs the layout to the main window
     setLayout(m_pMainLayout);
@@ -72,5 +72,9 @@ MainWindowEx8::~MainWindowEx8()
    
 }
 
+void MainWindowEx8::setSearchButton()
+{
+    emit sigBroadcastSearchField(m_leSearchField->text());
+}
 
 
