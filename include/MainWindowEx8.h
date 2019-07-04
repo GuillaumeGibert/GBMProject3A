@@ -20,9 +20,15 @@ class MainWindowEx8: public MainWindow
     
     public slots:
         void setSearchButton();
+        void setSearchInfos(QString, QString, int, float, float);
+        void eraseSearchInfos();
+        void addPatient();
+        void removePatient();
     
     signals:
         void sigBroadcastSearchField(QString);
+        void sigBroadcastAddPatient(QString, QString, int, float, float);
+        void sigBroadcastRemovePatient(QString);
 	    
     private:
         QPushButton* m_pbSEARCH;

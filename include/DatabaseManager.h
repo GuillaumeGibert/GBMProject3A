@@ -23,6 +23,11 @@ public:
 
 public slots:
     void setSearchField(QString);
+    void addEntry(QString, QString, int, float, float);
+    void removeEntry(QString);
+
+signals:
+    void sigBroadcastSearchInfos(QString, QString, int, float, float);
 	
 
 private:

@@ -23,8 +23,10 @@ int main(int argc, char *argv[])
     window.show();
 
     //=======Qt CONNECTIONS=========
-    QObject::connect(&window, SIGNAL(sigBroadcastSearchField(QString)), &dbManager,    SLOT(setSearchField(QString)));
-
+    QObject::connect(&window,       SIGNAL(sigBroadcastSearchField(QString)),                               &dbManager,     SLOT(setSearchField(QString)));
+    QObject::connect(&dbManager,    SIGNAL(sigBroadcastSearchInfos(QString, QString, int, float, float)),   &window,        SLOT(setSearchInfos(QString, QString, int, float, float)));
+    QObject::connect(&window,       SIGNAL(sigBroadcastAddPatient(QString, QString, int, float, float)),    &dbManager,     SLOT(addEntry(QString, QString, int, float, float)));
+    QObject::connect(&window,       SIGNAL(sigBroadcastRemovePatient(QString)),                             &dbManager,     SLOT(removeEntry(QString)));
 
     return app.exec();
 }
