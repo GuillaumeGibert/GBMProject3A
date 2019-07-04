@@ -34,3 +34,5 @@
 # Qt
 *.pro.user 
 
+# Tex
+*.gz
