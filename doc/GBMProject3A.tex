@@ -14,7 +14,16 @@
 %%%SECTION%%%%%%%%%%%%
 \section{Introduction}
 Ce document décrit les différents éléments de la suite logicielle GBMProject3A.
-Le code fourni est écrit en C++ avec comme unique dépendance les bibliothèques Qt.
+Le code fourni est écrit en C++ avec comme unique dépendance l'API Qt.
+Il se compose d'un ensemble de classes qui permettent:
+\begin{itemize}
+\item de communiquer avec un système Arduino que ce soit en réception ou en émission 
+\item de traiter des signaux (filtrage, FFT)
+\item d'afficher des signaux
+\item de faire des requêtes sur une base de données MySQL
+\end{itemize}
+
+Une série d'exemples permet d'implémenter chaque 
 
 %%%SECTION%%%%%%%%%%%%
 \section{Exemple 1: Récupérer des données depuis un Arduino (liaison filaire)}
