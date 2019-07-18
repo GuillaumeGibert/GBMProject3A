@@ -14,22 +14,28 @@
 %%%SECTION%%%%%%%%%%%%
 \section{Introduction}
 Ce document décrit les différents éléments de la suite logicielle GBMProject3A.
+
+\subsection{Côté PC}
 Le code fourni est écrit en C++ avec comme unique dépendance l'API Qt.
 Il se compose d'un ensemble de classes qui permettent:
 \begin{itemize}
-\item de communiquer avec un système Arduino que ce soit en réception ou en émission 
-\item de traiter des signaux (filtrage, FFT)
-\item d'afficher des signaux
-\item de faire des requêtes sur une base de données MySQL
+\item de communiquer avec un système Arduino que ce soit en réception ou en émission;
+\item de traiter des signaux (filtrage, FFT);
+\item d'afficher des signaux;
+\item de faire des requêtes sur une base de données MySQL.
 \end{itemize}
 
-Une série d'exemples permet d'implémenter chaque 
+\subsection{Côté Arduino}
+Un code de test est fourni qui permet d'envoyer sous forme de chaîne de caractères standardisée les valeurs lues sur les 5 canaux analogiques de la carte Arduino. Une fonction de lecture d'évènements est également mise en place pour lire, en parallèle, les données sur le port série provenant du PC.
+
+
+Une série d'exemples permet d'implémenter chaque fonctionnalité. Ils vont être décrit dans la suite du document.
 
 %%%SECTION%%%%%%%%%%%%
 \section{Exemple 1: Récupérer des données depuis un Arduino (liaison filaire)}
 
 %%%SECTION%%%%%%%%%%%%
-\section{Exemple 2: : Récupérer des données depuis un Arduino (liaison Bluetooth)}
+\section{Exemple 2: Récupérer des données depuis un Arduino (liaison Bluetooth)}
 
 %\begin{figure}
 % \centering
@@ -38,6 +44,24 @@ Une série d'exemples permet d'implémenter chaque
 %    \label{Exemple2}
 %\end{figure}
 
+%%%SECTION%%%%%%%%%%%%
+\section{Exemple 3: Récupérer des données depuis un générateur de signaux}
 
+%%%SECTION%%%%%%%%%%%%
+\section{Exemple 4: Afficher des signaux temporels}
+
+%%%SECTION%%%%%%%%%%%%
+\section{Exemple 5: Filtrer des signaux temporels}
+
+
+%%%SECTION%%%%%%%%%%%%
+\section{Exemple 6: Calculer une transformée de Fourier rapide (FFT)}
+
+
+%%%SECTION%%%%%%%%%%%%
+\section{Exemple 7:  Envoyer une chaîne de caractères à l'Arduino}
+
+%%%SECTION%%%%%%%%%%%%
+\section{Exemple 8:  Gérer une base de données "patient" depuis une interface graphique}
 
 \end{document}
