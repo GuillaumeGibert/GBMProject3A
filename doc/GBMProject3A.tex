@@ -32,17 +32,30 @@ Un code de test est fourni qui permet d'envoyer sous forme de chaîne de caract�
 Une série d'exemples permet d'implémenter chaque fonctionnalité. Ils vont être décrit dans la suite du document.
 
 %%%SECTION%%%%%%%%%%%%
+\begin{figure}
+ \centering
+    \includegraphics[width=10cm]{images/GBMProject3A_ex1.jpg}
+    \caption{Les données de l'Arduino sont captées par l'objet SerialPortManager qui les envoie à l'objet Spy.}
+    \label{ex1}
+\end{figure}
+
 \section{Exemple 1: Récupérer des données depuis un Arduino (liaison filaire)}
+Dans cet exemple, deux objets sont instantiés (voir Figure~\ref{ex1}). Un objet de type SerialPortManager récupère les données envoyées par l'Arduino sur le port série. 
+Il envoie ensuite, via un signal/slot Qt, les données vers un objet de type Spy qui les affiche à l'écran.
+
 
 %%%SECTION%%%%%%%%%%%%
-\section{Exemple 2: Récupérer des données depuis un Arduino (liaison Bluetooth)}
-
 %\begin{figure}
 % \centering
-%    \includegraphics[width=10cm]{Exemple2.jpg}
-%    \caption{Exemple 2}
-%    \label{Exemple2}
+%    \includegraphics[width=10cm]{images/GBMProject3A_ex2.jpg}
+%    \caption{Les données de l'Arduino sont captées par l'objet SerialPortManager qui les envoie à l'objet Spy.}
+%    \label{ex2}
 %\end{figure}
+
+\section{Exemple 2: Récupérer des données depuis un Arduino (liaison Bluetooth)}
+
+Cet exemple est similaire au précédent (cf. Figure~\ref{ex1}). La seule différence réside dans le type de connexion entre l'Arduino et le PC. 
+Dans l'exemple précédent, L'Arduino était connecté avec un cable USB au PC alors que dans cet exemple, il est connecté en Bluetooth via un module HC-05 par exemple.
 
 %%%SECTION%%%%%%%%%%%%
 \section{Exemple 3: Récupérer des données depuis un générateur de signaux}
