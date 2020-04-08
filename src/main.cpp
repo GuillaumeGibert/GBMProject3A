@@ -1,16 +1,26 @@
-#include "ArduinoSimulator.h"
+#include <QApplication>
 
-#include <QtWidgets/qapplication.h>
+#include "ArduinoSimulator.h"
+#include "ArduinoSimulatorGUI.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-	QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
+    //=======ARDUINO SIMULATOR=========
+    // creates the Arduino simulator
 	ArduinoSimulator sim;
 
-	app.exec();
+    //=======MainWindow=========
+    // creates the Main Window
+    ArduinoSimulatorGUI gui;
+    // shows the main window
+    gui.show();
 
-	return 0;
+    //=======Qt CONNECTIONS=========
+    QObject::connect(&gui, SIGNAL(sendDataFilename(QString)), &sim,    SLOT(setDataFile(QString)));
+
+
+    return app.exec();
 }
 

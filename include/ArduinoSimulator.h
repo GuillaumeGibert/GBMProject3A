@@ -23,7 +23,7 @@ public:
 protected:
     void timerEvent(QTimerEvent *e);
     void doWork();
-    bool loadConfigFile(QString sConfigFilename);
+    bool loadDataFile(QString sDataFilename);
 
 signals:
     void sendMessage(const QString &message);
@@ -32,13 +32,14 @@ private slots:
     void clientConnected(const QString &name);
     void clientDisconnected(const QString &name);
     void clientDisconnected();
+    void setDataFile(QString sDataFilename);
 
 private:
     BtServer *server;
     QList<BtClient *> clients;
     QBasicTimer* m_pTimer;
     float m_fFps;
-    bool m_bIsConfigFileLoaded;
+    bool m_bIsDataFileLoaded;
     std::vector<QString> m_vSimulatedData;
     int m_i32DataIndex;
 
