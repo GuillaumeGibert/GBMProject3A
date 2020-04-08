@@ -33,6 +33,7 @@ class SerialPortManager : public QObject
 		void setBufferBeginKeyword(QString);
 		void setBufferEndKeyword(QString);
 		void setValueSeparator(char);
+        void setFirstPortFound(bool);
 
 		std::vector<float> getDataBuffer();
 

@@ -258,6 +258,11 @@ void SerialPortManager::setValueSeparator(char cValueSeparator)
 	m_bIsValueSeparatorSet = true;
 }
 
+void SerialPortManager::setFirstPortFound(bool bFirstPortFound)
+{
+    m_bFirstPortFound = bFirstPortFound;
+}
+
 std::vector<float> SerialPortManager::getDataBuffer() 
 {
 	std::vector<float> l_vDataBuffer = m_vDataBuffer;
@@ -325,7 +330,7 @@ void SerialPortManager::findSerialPort(QString portName)
         if (m_bFirstPortFound && (info.description().contains(portName) || info.manufacturer().contains(portName)))
 		{
 			portToUse = info;
-			//m_bFirstPortFound = false;
+            m_bFirstPortFound = false;
 			m_bIsPortFound = true; 
 			
             //if (m_bVerboseMode)
@@ -338,10 +343,14 @@ void SerialPortManager::findSerialPort(QString portName)
 				qInfo() << "--> Serial number: " + info.serialNumber();
 				qInfo() << "--> Vendor Identifier: " + (info.hasVendorIdentifier() ? QString::number(info.vendorIdentifier(), 16) : QString());
 				qInfo() << "--> Product Identifier: " + (info.hasProductIdentifier() ? QString::number(info.productIdentifier(), 16) : QString());
-				// watch out: info.isBusy() does not work for Bluetooth serial port!
+                // pay attention: info.isBusy() does not work for Bluetooth serial port!
 				//qInfo() << QObject::tr("Busy: ") + (info.isBusy() ? QObject::tr("Yes") : QObject::tr("No")) + "\n";
 			}
 		}
+        else
+        {
+            m_bFirstPortFound = true;
+        }
 	}
 	
 	m_pSerialPort->setPortName(portToUse.portName());

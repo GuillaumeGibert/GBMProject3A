@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 	spm.setBufferBeginKeyword("Sensor:");
 	spm.setBufferEndKeyword("\n");
 	spm.setValueSeparator('|');
+    //spm.setFirstPortFound(false);
 
 	// finds the serial port
 	spm.findSerialPort("Bluetooth");
