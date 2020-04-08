@@ -1,17 +1,21 @@
 QT = core bluetooth widgets
 requires(qtConfig(listwidget))
 
+INCLUDEPATH += include
+
 SOURCES = \
-	main.cpp \
-	ArduinoSimulator.cpp \
-	BtServer.cpp \
-	BtClient.cpp
+        src/main.cpp \
+        src/ArduinoSimulator.cpp \
+        src/ArduinoSimulatorGUI.cpp \
+        src/BtServer.cpp \
+        src/BtClient.cpp
     
 
 HEADERS = \
-	ArduinoSimulator.h \
-	BtServer.h \
-	BtClient.h
+        include/ArduinoSimulator.h \
+        include/ArduinoSimulatorGUI.h \
+        include/BtServer.h \
+        include/BtClient.h
 	
 	
     
