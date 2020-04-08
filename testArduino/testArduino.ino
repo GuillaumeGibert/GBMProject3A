@@ -1,13 +1,23 @@
-const int _nbPinIn = 5;
-const int _portBaud = 9600;
-const float _fps = 10.0;
+#include <SoftwareSerial.h> // for Bluetooth communication with HC05 (or HC06) module
+#define rxPin 0 // arduino pin 11 as RX, connect to HC-05 TX pin 
+#define txPin 1 // arduino pin 10 as TX, connect to HC-05 RX pin
+SoftwareSerial virtualSerial(rxPin, txPin); //virtual serial communication port
+
+const int _nbPinIn = 5; // number of analog inputs to read
+const int _portBaud = 9600; // baud rate of the serial port
+const float _fps = 10.0; // frame rate to send data
 String inputString = "";         // a String to hold incoming data
 bool stringComplete = false;  // whether the string is complete
 
 void setup() 
 {
-  // initializes serial port
+  // initializes the serial port
   Serial.begin(_portBaud);
+
+  // initializes the virtual serial port for Bluetooth communication
+   pinMode(rxPin, INPUT);
+   pinMode(txPin, OUTPUT);
+   virtualSerial.begin(_portBaud);
 
   // reserves 200 bytes for the inputString:
   inputString.reserve(200);
@@ -22,9 +32,9 @@ void loop()
     // initialzes the timer
     unsigned long startTime = micros();
 
+    Serial.print("Sensor:|"); // writes on the serial port
+    virtualSerial.print("Sensor:|"); //writes on Bluetooth
     
-    Serial.print("Sensor:|");
-  
     for (int l_pinIn = 0; l_pinIn < _nbPinIn; l_pinIn++)
     {
         //reads data once (and discards it) to avoid wrong estimation
@@ -32,12 +42,16 @@ void loop()
 
         // writes values on the serial port
         Serial.print(analogRead(l_pinIn)); Serial.print("|");
+        
+        // writes values on the virtual serial port (Bluetooth)
+        virtualSerial.print(analogRead(l_pinIn)); virtualSerial.print("|");
     }
 
-    Serial.print("\n");
+    Serial.print("\n"); // writes on the serial port
+    virtualSerial.print("\n"); //writes on Bluetooth
 
 
-    // print the string when a newline arrives:
+    // prints the string when a newline arrives:
     if (stringComplete) 
     {
       if (inputString.equals("Start\n"))
@@ -46,7 +60,7 @@ void loop()
       if (inputString.equals("Stop\n"))
         digitalWrite(LED_BUILTIN, LOW);
       
-      // clear the string:
+      // clears the string:
       inputString = "";
       stringComplete = false;
     }
@@ -72,12 +86,12 @@ void serialEvent()
 {
   while (Serial.available()) 
   {
-    // get the new byte:
+    // gets the new byte:
     char inChar = (char)Serial.read();
-    // add it to the inputString:
+    // adds it to the inputString:
     inputString += inChar;
     // if the incoming character is a newline, set a flag so the main loop can
-    // do something about it:
+    // does something about it:
     if (inChar == '\n') 
     {
       stringComplete = true;
