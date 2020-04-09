@@ -8,14 +8,26 @@ android: QT += androidextras
 INCLUDEPATH += include
 
 HEADERS = 	include/RemoteSelector.h \
-			include/BtClient.h \
-			include/ArduinoSimClient.h \
+                include/BtClient.h \
+                include/ArduinoSimClient.h \
+                include/MainWindow.h \
+                include/SignalDisplay.h \
+                include/TemporalSignalDisplay.h \
+                include/BufferedSignalDisplay.h \
+                include/MainWindowEx9.h \
+                include/Buffering.h \
+                include/FFT.h
                 
 SOURCES = 	src/RemoteSelector.cpp \
-			src/BtClient.cpp \
-			src/ArduinoSimClient.cpp \
-			src/ex9.cpp       
+                src/BtClient.cpp \
+                src/ArduinoSimClient.cpp \
+                src/MainWindow.cpp \
+                src/SignalDisplay.cpp \
+                src/TemporalSignalDisplay.cpp \
+                src/BufferedSignalDisplay.cpp \
+                src/MainWindowEx9.cpp \
+                src/Buffering.cpp \
+                src/FFT.cpp \
+                src/ex9.cpp
 
-FORMS = \
-    chat.ui \
-    remoteselector.ui
+FORMS =         ui/remoteselector.ui

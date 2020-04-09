@@ -48,7 +48,7 @@
 **
 ****************************************************************************/
 
-#include "remoteselector.h"
+#include "RemoteSelector.h"
 #include "ui_remoteselector.h"
 
 #include <QtBluetooth/qbluetoothlocaldevice.h>

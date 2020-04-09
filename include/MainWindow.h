@@ -33,6 +33,9 @@ class MainWindow: public QWidget
         QHBoxLayout* m_pMainLayout;
         QHBoxLayout* m_pSignalLayout;
 
+        QVBoxLayout* m_pMainVLayout;
+        QVBoxLayout* m_pSignalVLayout;
+
 };
 
 #endif
