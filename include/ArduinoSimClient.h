@@ -2,6 +2,8 @@
 #define ARDUINO_SIM_CLIENT_H
 
 #include <QElapsedTimer>
+
+#include <QtBluetooth/qbluetoothdeviceinfo.h>
 #include <QtBluetooth/qbluetoothhostinfo.h>
 #include <QtBluetooth/qbluetoothlocaldevice.h>
 #include <QtBluetooth/qbluetoothuuid.h>
@@ -33,14 +35,14 @@ public:
 public slots:
     void searchBtServer();
     void readData(const QString &sender, const QString &message);
+    void clientDisconnected();
 
 signals:
     void sigBroadcastSignalValues(float, std::vector<float>);
 
 private:
-    BtClient* m_pBtClient;
-    RemoteSelector* m_pRemoteSelector;
     QList<QBluetoothHostInfo> m_olocalAdapters;
+    BtClient* m_pBtClient;
 
     QString m_sBufferBeginKeyword;
     QString m_sBufferEndKeyword;

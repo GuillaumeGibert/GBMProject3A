@@ -32,9 +32,7 @@ class MainWindow: public QWidget
         BufferedSignalDisplay* m_pPowerSpectrumDisplay;
         QHBoxLayout* m_pMainLayout;
         QHBoxLayout* m_pSignalLayout;
-
         QVBoxLayout* m_pMainVLayout;
-        QVBoxLayout* m_pSignalVLayout;
 
 };
 

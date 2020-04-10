@@ -4,7 +4,6 @@
 #include <QApplication>
 #include <QPushButton>
 #include "MainWindow.h"
-#include <QLabel>
 
 
 class MainWindowEx9: public MainWindow
@@ -17,14 +16,15 @@ class MainWindowEx9: public MainWindow
 
     signals:
         void searchBtServer();
+        void quit();
 
 private slots:
         void searchBtServerClicked();
+        void quitInterface();
 
     private:
         QPushButton* m_pSearchBtServer;
         QPushButton* m_pQuit;
-        QLabel* m_pLabel;
 
 };
 

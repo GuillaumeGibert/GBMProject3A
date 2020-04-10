@@ -3,7 +3,7 @@
 ArduinoSimulatorGUI::ArduinoSimulatorGUI()
 {
         setFixedSize(200, 200);
-        m_pLoadConfigFileButton = new QPushButton("Load", this);
+        m_pLoadConfigFileButton = new QPushButton("Load Data", this);
         QObject::connect(m_pLoadConfigFileButton, SIGNAL(clicked()), this, SLOT(openDialog()));
 }
 
@@ -18,7 +18,7 @@ ArduinoSimulatorGUI::~ArduinoSimulatorGUI()
 
 void ArduinoSimulatorGUI::openDialog()
 {
-    QString sDataFilename = QFileDialog::getOpenFileName(this, "Load", QString(), "data(*.txt)");
+    QString sDataFilename = QFileDialog::getOpenFileName(this, "Load Data", QString(), "data(*.txt)");
 
     if (!sDataFilename.isEmpty())
         emit sendDataFilename(sDataFilename);

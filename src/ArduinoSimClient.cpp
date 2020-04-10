@@ -1,7 +1,7 @@
 #include "ArduinoSimClient.h"
 
 ArduinoSimClient::ArduinoSimClient() :
-    m_pBtClient(nullptr), m_pRemoteSelector(nullptr),
+    m_pBtClient(nullptr),
     m_pElapsedTimer(new QElapsedTimer)
 {
     m_olocalAdapters = QBluetoothLocalDevice::allDevices();
@@ -18,9 +18,8 @@ ArduinoSimClient::~ArduinoSimClient()
        }
     };
 
-    deleteAndNullify(m_pBtClient);
-    deleteAndNullify(m_pRemoteSelector);
-    deleteAndNullify(m_pElapsedTimer);
+   deleteAndNullify(m_pElapsedTimer);
+   deleteAndNullify(m_pBtClient);
 }
 
 void ArduinoSimClient::searchBtServer()
@@ -28,24 +27,24 @@ void ArduinoSimClient::searchBtServer()
     const QBluetoothAddress adapter = m_olocalAdapters.isEmpty() ?
                                            QBluetoothAddress() :
                                            m_olocalAdapters.at(0).address();
-    if (nullptr == m_pRemoteSelector)
-        m_pRemoteSelector = new RemoteSelector(adapter);
+
+    RemoteSelector remoteSelector(adapter);
 
     #ifdef Q_OS_ANDROID
         if (QtAndroid::androidSdkVersion() >= 23)
-            m_pRemoteSelector->startDiscovery(QBluetoothUuid(reverseUuid));
+            remoteSelector.startDiscovery(QBluetoothUuid(reverseUuid));
         else
-            m_pRemoteSelector->startDiscovery(QBluetoothUuid(serviceUuid));
+            remoteSelector.startDiscovery(QBluetoothUuid(serviceUuid));
     #else
-        m_pRemoteSelector->startDiscovery(QBluetoothUuid(serviceUuid));
+        remoteSelector.startDiscovery(QBluetoothUuid(serviceUuid));
     #endif
 
-    if (m_pRemoteSelector->exec() == QDialog::Accepted)
+    if (remoteSelector.exec() == QDialog::Accepted)
     {
-        QBluetoothServiceInfo service = m_pRemoteSelector->service();
+        QBluetoothServiceInfo service = remoteSelector.service();
 
-        //qDebug() << "Connecting to service 2" << service.serviceName()
-        //<< "on" << service.device().name();
+        qDebug() << "Connecting to service 2" << service.serviceName()
+        << "on" << service.device().name();
 
         // Create client
         qDebug() << "Going to create client";
@@ -56,7 +55,7 @@ void ArduinoSimClient::searchBtServer()
         qDebug() << "Connecting...";
 
         connect(m_pBtClient, SIGNAL(messageReceived(const QString, const QString)), this, SLOT(readData(const QString, const QString)));
-
+        connect(m_pBtClient, &BtClient::disconnected, this, QOverload<>::of(&ArduinoSimClient::clientDisconnected));
         qDebug() << "Start client";
         m_pBtClient->startClient(service);
 
@@ -116,3 +115,7 @@ void ArduinoSimClient::setValueSeparator(char cValueSeparator)
     m_cValueSeparator = cValueSeparator;
 }
 
+void ArduinoSimClient::clientDisconnected()
+{
+    m_pBtClient->deleteLater();
+}

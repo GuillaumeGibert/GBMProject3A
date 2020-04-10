@@ -15,8 +15,7 @@ HEADERS = 	include/RemoteSelector.h \
                 include/TemporalSignalDisplay.h \
                 include/BufferedSignalDisplay.h \
                 include/MainWindowEx9.h \
-                include/Buffering.h \
-                include/FFT.h
+
                 
 SOURCES = 	src/RemoteSelector.cpp \
                 src/BtClient.cpp \
@@ -26,8 +25,6 @@ SOURCES = 	src/RemoteSelector.cpp \
                 src/TemporalSignalDisplay.cpp \
                 src/BufferedSignalDisplay.cpp \
                 src/MainWindowEx9.cpp \
-                src/Buffering.cpp \
-                src/FFT.cpp \
                 src/ex9.cpp
 
 FORMS =         ui/remoteselector.ui
