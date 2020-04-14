@@ -43,7 +43,7 @@ Installation :
 
 * Either clone (git clone https://github.com/GuillaumeGibert/GBMProject3A.git using a git client) or download the project
 * Upload the ino project to your Arduino
-* Open the C++ project using the ex<NUM>.pro file, where NUM goes from 1 to 9
+* Open the C++ project using the exNUM.pro file, where NUM goes from 1 to 9
 * Choose the example you want to run by adding it to the GBMProject3A.pro file
 * Compile and Run it
 
