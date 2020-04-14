@@ -43,8 +43,7 @@ Installation :
 
 * Either clone (git clone https://github.com/GuillaumeGibert/GBMProject3A.git using a git client) or download the project
 * Upload the ino project to your Arduino
-* Open the C++ project using the ex1.pro, ex2.pro, etc. files
-* Choose the example you want to run by adding it to the GBMProject3A.pro file
+* Open the selected C++ project using the corresponding .pro file
 * Compile and Run it
 
 Feel free to modify the code to fit your needs!
